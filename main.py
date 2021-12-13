@@ -20,56 +20,11 @@ intents.messages=True
 client = commands.Bot(command_prefix='!', help_command=None, case_insensitive=True, intents=intents, allowed_mentions = discord.AllowedMentions(everyone = True))
 client.remove_command('help')
 
+#-----Events triggered n shi-----
+
 @client.event
 async def on_ready():
   await client.change_presence(activity=discord.Game(name="with these bitches hearts"))
-
-
-@client.command()
-async def info(ctx):
-    embed = discord.Embed(title=f"{ctx.guild.name}",
-                          description="Server data:",
-                          timestamp=datetime.datetime.utcnow(),
-                          color=0x19B9B9)
-    embed.add_field(name="Server created at:", value=f"{ctx.guild.created_at}")
-    embed.add_field(name="Server Owner:", value=f"{ctx.guild.owner}")
-    embed.add_field(name="Server Region:",
-                    value=f"{ctx.guild.region}".capitalize())
-    embed.add_field(name="Server ID:", value=f"{ctx.guild.id}")
-    embed.set_thumbnail(url=f"{ctx.guild.icon_url}")
-
-    await ctx.send(embed=embed)
-
-
-@client.command()
-async def calculate(ctx, num_one: int, symbol: str, num_two: int):
-    if symbol == '+':
-        await ctx.send(num_one + num_two)
-    elif symbol == '-':
-        await ctx.send(num_one - num_two)
-    elif symbol == '/':
-        await ctx.send(num_one / num_two)
-    elif symbol == '*':
-        await ctx.send(num_one * num_two)
-    else:
-        await ctx.send('what')
-
-
-@client.command(aliases=["ig"])
-async def instagram(ctx, instaUsername):
-  from os import environ
-  environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  
-  #await ctx.message.delete()
-  bot = Instaloader()
-  profile = Profile.from_username(bot.context, str(instaUsername))
-  embed = Embed(title=f"Instagram", color=0x11019e)
-  embed.add_field(name="Username", value=f"`@{profile.username}`", inline=True)
-  embed.add_field(name="Followers", value=f"{profile.followers}", inline=True)
-  embed.add_field(name="Follows", value=f"{profile.followees}", inline=True)
-  embed.add_field(name="Bio", value=f"{profile.biography}", inline=True)
-  embed.set_footer(text="hey lol")
-  await ctx.send(embed=embed) 
-
 
 @client.event
 async def on_message(message):
@@ -136,6 +91,41 @@ async def on_message(message):
 
   await client.process_commands(message)
 
+
+@client.event
+async def on_message_delete(message):
+  global toggle
+  if toggle % 2 == 0:
+    if message.author == client.user:
+      return
+    elif "YAG" in str(message.author):
+      return
+    embed=discord.Embed(title="Deleted message!", description="**{0}** said **'{1}'** but it was deleted!".format(message.author.mention, message.content), color=0x19B9B9)
+    await message.channel.send(embed=embed)
+
+@client.event
+async def on_command_error(ctx, error):
+  if isinstance(error, commands.MissingPermissions):
+    text = "Sorry {}, you do not have permissions to do that lol".format(ctx.message.author.mention)
+    await ctx.channel.send(text)
+  if isinstance(error, commands.CommandNotFound):
+	  await ctx.channel.send("not even a real command bruh")
+
+@client.event
+async def on_member_update(before, after):
+    if before.status is discord.Status.offline and after.status is discord.Status.online:
+      if after.id == 811075449308184648:
+        await move()
+        channel = client.get_channel(887369792590327871)
+        await channel.send(f' AYO! {after.name} is now {after.status}. Please follow evacuation protocols. Thanks and have a great day!')
+    
+    if before.status is discord.Status.online and after.status is discord.Status.offline:
+      if after.id == 811075449308184648:
+        await move2()
+        await channel.send('You have been returned to a normal VC!')
+    
+
+#-----client commands-----
 assd = 0
 
 @client.command()
@@ -170,28 +160,6 @@ async def president(ctx):
   embed.set_footer(text="Note: Not BN is in no way affiliated with BN")
   embed.set_thumbnail(url="https://i.imgur.com/C4QKvfT.png")
   await ctx.channel.send(embed=embed)
-
-
-@client.event
-async def on_message_delete(message):
-  global toggle
-  if toggle % 2 == 0:
-    if message.author == client.user:
-      return
-    elif "YAG" in str(message.author):
-      return
-    embed=discord.Embed(title="Deleted message!", description="**{0}** said **'{1}'** but it was deleted!".format(message.author.mention, message.content), color=0x19B9B9)
-    await message.channel.send(embed=embed)
-
-@client.event
-async def on_command_error(ctx, error):
-  if isinstance(error, commands.MissingPermissions):
-    text = "Sorry {}, you do not have permissions to do that lol".format(ctx.message.author.mention)
-    await ctx.channel.send(text)
-  if isinstance(error, commands.CommandNotFound):
-	  await ctx.channel.send("not even a real command bruh")
-    
-
 
 @commands.command()
 async def boobs(ctx):
@@ -265,6 +233,58 @@ async def free(ctx, member: discord.Member):
     await member.remove_roles(role)
     await ctx.send("FREED")
 
+@client.command()
+async def info(ctx):
+    embed = discord.Embed(title=f"{ctx.guild.name}",
+                          description="Server data:",
+                          timestamp=datetime.datetime.utcnow(),
+                          color=0x19B9B9)
+    embed.add_field(name="Server created at:", value=f"{ctx.guild.created_at}")
+    embed.add_field(name="Server Owner:", value=f"{ctx.guild.owner}")
+    embed.add_field(name="Server Region:",
+                    value=f"{ctx.guild.region}".capitalize())
+    embed.add_field(name="Server ID:", value=f"{ctx.guild.id}")
+    embed.set_thumbnail(url=f"{ctx.guild.icon_url}")
+
+    await ctx.send(embed=embed)
+
+
+@client.command()
+async def calculate(ctx, num_one: int, symbol: str, num_two: int):
+    if symbol == '+':
+        await ctx.send(num_one + num_two)
+    elif symbol == '-':
+        await ctx.send(num_one - num_two)
+    elif symbol == '/':
+        await ctx.send(num_one / num_two)
+    elif symbol == '*':
+        await ctx.send(num_one * num_two)
+    else:
+        await ctx.send('what')
+
+
+@client.command(aliases=["ig"])
+async def instagram(ctx, instaUsername):
+  from os import environ
+  environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  
+  #await ctx.message.delete()
+  bot = Instaloader()
+  profile = Profile.from_username(bot.context, str(instaUsername))
+  embed = Embed(title=f"Instagram", color=0x11019e)
+  embed.add_field(name="Username", value=f"`@{profile.username}`", inline=True)
+  embed.add_field(name="Followers", value=f"{profile.followers}", inline=True)
+  embed.add_field(name="Follows", value=f"{profile.followees}", inline=True)
+  embed.add_field(name="Bio", value=f"{profile.biography}", inline=True)
+  embed.set_footer(text="hey lol")
+  await ctx.send(embed=embed) 
+
+#purging
+@client.command( pass_context = True )
+@commands.has_permissions( administrator = True )
+async def clear( ctx, amount : int ):
+    await ctx.channel.purge(limit = amount)
+    await ctx.send(f'Cleared {amount} messages')
+
 
 async def move():
     channel = client.get_channel(755483435656675539)
@@ -284,29 +304,8 @@ async def move2():
     for members in Members:
         await members.move_to(evac)
 
-@client.event
-async def on_member_update(before, after):
-    if before.status is discord.Status.offline and after.status is discord.Status.online:
-      if after.id == 811075449308184648:
-        await move()
-        channel = client.get_channel(887369792590327871)
-        await channel.send(f' AYO! {after.name} is now {after.status}. Please follow evacuation protocols. Thanks and have a great day!')
-    
-    if before.status is discord.Status.online and after.status is discord.Status.offline:
-      if after.id == 811075449308184648:
-        await move2()
-        await channel.send('You have been returned to a normal VC!')
 
-#purging
-@client.command( pass_context = True )
-@commands.has_permissions( administrator = True )
-async def clear( ctx, amount : int ):
-    await ctx.channel.purge(limit = amount)
-    await ctx.send(f'Cleared {amount} messages')
-
-
-#-----should use client commands instead but eh-----
-
+#-----shit u do in the end-----
 
 keep_alive()
 token = os.environ.get("DISCORD_BOT_SECRET")
