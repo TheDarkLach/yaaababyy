@@ -2,14 +2,10 @@ import discord
 import os
 from keep_alive import keep_alive
 from discord.ext import commands
-from discord.ext.commands import check
 import datetime
 from instaloader import Instaloader, Profile
 from discord import Embed
-from json import loads
-from requests import get
 from discord import Spotify
-import asyncio
 
 #-----Intents-----
 
@@ -21,6 +17,9 @@ intents.messages=True
 
 client = commands.Bot(command_prefix='!', help_command=None, case_insensitive=True, intents=intents, allowed_mentions = discord.AllowedMentions(everyone = True))
 client.remove_command('help')
+
+API_KEY = "7774a5518f05c82fe0342c118adfaa45"  
+API_SECRET = "4483a296bde11ec09e1bebf4a00380c3"
 
 #-----Events triggered n shi-----
 
