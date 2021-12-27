@@ -6,6 +6,11 @@ import datetime
 from instaloader import Instaloader, Profile
 from discord import Embed
 from discord import Spotify
+import asyncio
+from json import loads
+from requests import get 
+from discord.ext.commands import check
+import time
 
 #-----Intents-----
 
@@ -18,8 +23,6 @@ intents.messages=True
 client = commands.Bot(command_prefix='!', help_command=None, case_insensitive=True, intents=intents, allowed_mentions = discord.AllowedMentions(everyone = True))
 client.remove_command('help')
 
-API_KEY = "7774a5518f05c82fe0342c118adfaa45"  
-API_SECRET = "4483a296bde11ec09e1bebf4a00380c3"
 
 #-----Events triggered n shi-----
 
@@ -114,16 +117,11 @@ async def on_command_error(ctx, error):
 
 @client.event
 async def on_member_update(before, after):
+    channel = client.get_channel(887369792590327871)
     if before.status is discord.Status.offline and after.status is discord.Status.online:
       if after.id == 811075449308184648:
         await move()
-        channel = client.get_channel(887369792590327871)
-        await channel.send(f' AYO! {after.name} is now {after.status}. Please follow evacuation protocols. Thanks and have a great day!')
-    
-    if before.status is discord.Status.online and after.status is discord.Status.offline:
-      if after.id == 811075449308184648:
-        await move2()
-        await channel.send('You have been returned to a normal VC!')
+        await channel.send('AYO! Cerenity is now Online. Please follow evacuation protocols. Thanks and have a great day!', delete_after = 10.0)
     
 
 #-----client commands-----
@@ -162,25 +160,25 @@ async def president(ctx):
   embed.set_thumbnail(url="https://i.imgur.com/C4QKvfT.png")
   await ctx.channel.send(embed=embed)
 
-@commands.command()
-async def boobs(ctx):
-  await ctx.channel.send("（。 ㅅ  。）")
-
-@commands.command()
-async def butt(ctx):
-  await ctx.channel.send("(      y      )")
-
 
 @client.command()
 async def spin(ctx):
   await ctx.channel.send("  https://tenor.com/view/monke-spin-spinning-monkey-spinning-monke-gif-20299211")
 
+
+@client.command()
+async def spam(ctx, amount : int):
+  i = 0
+  channel = client.get_channel(774329123308830721)
+  while i < amount:
+    await channel.send("&boom")
+    i+=1
+
 @client.command()
 async def help(ctx):
   embed=discord.Embed(title="AHHHH HELP!", description=
-  "Commands include: \n!kick: Kick a member \n!ban: Ban a member \n!unban: Unban a member \n!mute: Mute a member, 'Muted' role required \n!boobs: Print out boobs \n!butt: Print out a butt", color=0x19B9B9)
+  "Commands include: \n!kick: Kick a member \n!ban: Ban a member \n!unban: Unban a member \n!mute: Mute a member \n!timeout: puts user in timeout \n!free: releases user from timeout \n!info: Print out info on the current server \n!current: Show info on current song \n!spin: spinning monke \n!delete: enable deleted message logging \n!nuke: creates channels and spams gifs \n!nuke2: deletes every channel", color=0x19B9B9)
   await ctx.channel.send(embed=embed)
-
 
 @client.command()
 @commands.has_permissions(kick_members=True)
@@ -189,7 +187,6 @@ async def kick(ctx, user: discord.Member, *, reason="No reason"):
     embed=discord.Embed(title="Kicked!", description="**{0}** was kicked for **'{1}'**".format(user, reason), color=0x19B9B9)
     await ctx.channel.send(embed=embed)
 
-
 @client.command()
 @commands.has_permissions(ban_members=True)
 async def ban(ctx, user: discord.Member, *, reason="No reason"):
@@ -197,7 +194,6 @@ async def ban(ctx, user: discord.Member, *, reason="No reason"):
     embed=discord.Embed(title="Banned!", description="**{0}** was banned for **'{1}'** lol fuckin loser".format(user, reason), color=0x19B9B9)
     await ctx.channel.send(embed=embed)
 
- 
 @client.command()
 @commands.has_permissions(ban_members=True)
 async def unban(ctx, id:int):
@@ -282,7 +278,7 @@ async def instagram(ctx, instaUsername):
 @commands.has_permissions( administrator = True )
 async def clear( ctx, amount : int ):
     await ctx.channel.purge(limit = amount)
-    await ctx.send(f'Cleared {amount} messages')
+    await ctx.send(f'Cleared {amount} messages', delete_after = 5.0)
 
 #nuke, DO NOT USE
 @client.command(pass_context=True)
@@ -346,8 +342,8 @@ async def current(ctx, user: discord.Member = None):
               embed.add_field(name="Artist", value=f"{activity.artist}", inline=False)
               embed.set_thumbnail(url=activity.album_cover_url)
               await ctx.send(embed=embed)
-          else:
-            client.send("Bruh your activity empty")
+  else:
+    client.send("Bruh your activity empty")
 
 
 #-----shit u do in the end-----
