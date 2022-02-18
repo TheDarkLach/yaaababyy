@@ -6,12 +6,8 @@ import datetime
 from instaloader import Instaloader, Profile
 from discord import Embed
 from discord import Spotify
-import asyncio
-from json import loads
-from requests import get
-from discord.ext.commands import check
-import time
-import math
+import wikipedia
+
 
 #-----Intents-----
 
@@ -20,7 +16,7 @@ intents.presences = True
 intents.members = True
 intents.messages = True
 
-client = commands.Bot(command_prefix='!',
+client = commands.Bot(command_prefix='=',
                       help_command=None,
                       case_insensitive=True,
                       intents=intents,
@@ -30,87 +26,19 @@ client.remove_command('help')
 #-----Events triggered n shi-----
 
 
+@client.command()
+async def wiki(ctx, name):
+  name = "'" + name + "'"
+  result = wikipedia.summary(name)
+  await ctx.send(result)
+
 @client.event
 async def on_ready():
     await client.change_presence(activity=discord.Game(
         name="with these bitches hearts"))
 
-
-@client.event
-async def on_message(message):                              
-  global ass
-  if client.user != message.author:
-      if message.content.lower() == 'yasa':
-          await message.channel.send('lol hate that guy')
-      if message.author.id == 888925448954871868:
-          await message.channel.send(
-              "<@888925448954871868> suckin milk outta your moms titties like fine wine"
-          )
-      if message.content.lower() == 'utsho':
-          await message.channel.send(
-              'What a sexy beast <:bite:806383682629664840> ')
-      if message.content.lower() == 'boobie':
-          await message.channel.send('mmm, yummy.')
-      if message.content.lower() == 'kuzy':
-          await message.channel.send(
-              'your name is joe, ur opinion is irrelevant')
-      if message.content.lower() == 'shoo':
-          await message.channel.send('shoutout all the pears')
-      if message.content.lower() == 'nafiz':
-          await message.channel.send('fucking bitch ass hoe')
-      if message.content.lower() == 'roudro':
-          await message.channel.send('failed abortion')
-      if message.content.lower() == 'cd':
-          if 'cdn' in message.content:
-              return
-          else:
-              await message.reply('see deez nuts lmao')
-      if message.content.lower() == 'parodies':
-          await message.reply('pair of deez nuts in ur mouth lmao')
-      if message.content.lower() == 'tucker':
-          await message.channel.send(
-              'god he gives me such a raging boner lord have mercy')
-      if message.content.lower() == 'disability':
-          await message.reply('dis ability to fuck yo bitch')
-      if message.content.lower() == 'fitness':
-          await message.reply('fit this dick in yo mouth')
-      if message.content.lower() == 'im gay':
-          await message.reply('then prove it and come smack my ass ;)')
-      if message.content.lower() == 'varun':
-          await message.reply('lol come suck my dick bbg ;) -Utsho')
-      if message.content.lower() == 'candice':
-          await message.reply('candice dick fit in yo mouth, bitch')
-      if message.content.lower() == 'parody':
-          await message.reply('pair of deez nuts in yo mouth lmao')
-      if message.content.lower() == 'kenya':
-          await message.reply('kenya fit deez nuts in yo mouth')
-      if message.content.lower() == 'russian':
-          await message.reply("russian to suck dn")
-      if message.content.lower() == 'Russian':
-          await message.reply("russian to suck dn")
-      if message.content.lower() == 'dn':
-          await message.reply("deez nuts")
-      if client.user.mentioned_in(message):
-          await message.reply("lol dat me")
-      if message.content.lower() == 'balls':
-          await message.reply(
-              "https://tenor.com/view/balls-love-struck-lick-tongue-gif-14644911"
-          )
-      if 'ass' in message.content:
-          print(assd)
-          if assd % 2 == 0:
-              return
-          else:
-              await message.reply(
-                  'https://cdn.discordapp.com/emojis/627664851531071518.gif?v=1'
-              )
-      if message.content.lower() == 'kiss me':
-          await message.reply(
-              'https://tenor.com/view/caught-in-4k-caught-in4k-chungus-gif-19840038'
-          )
-      
-
-  await client.process_commands(message)
+def has_numbers(inputString):
+  return any(char.isdigit() for char in inputString)
 
 
 @client.event
@@ -151,22 +79,8 @@ async def on_member_update(before, after):
 
 
 #-----client commands-----
-assd = 0
-
-
-@client.command()
-@commands.is_owner()
-async def Ass(ctx):
-    global assd
-    assd = assd + 1
-    if assd % 2 == 0:
-        await ctx.channel.send("ass off")
-    else:
-        await ctx.channel.send("ass on")
-
 
 toggle = 1
-
 
 @client.command()
 @commands.has_permissions(ban_members=True)
@@ -234,7 +148,10 @@ async def kick(ctx, user: discord.Member, *, reason="No reason"):
 
 @client.command()
 @commands.has_permissions(ban_members=True)
-async def ban(ctx, user: discord.Member, *, reason="No reason"):
+async def ban(ctx, user: discord.Member = None, *, reason="No reason"):
+  if user == None:
+    await ctx.reply("bruh ban who")
+  else:
     await user.ban(reason=reason)
     embed = discord.Embed(
         title="Banned!",
@@ -300,20 +217,6 @@ async def info(ctx):
     await ctx.send(embed=embed)
 
 
-@client.command()
-async def calculate(ctx, num_one: int, symbol: str, num_two: int):
-    if symbol == '+':
-        await ctx.send(num_one + num_two)
-    elif symbol == '-':
-        await ctx.send(num_one - num_two)
-    elif symbol == '/':
-        await ctx.send(num_one / num_two)
-    elif symbol == '*':
-        await ctx.send(num_one * num_two)
-    else:
-        await ctx.send('what')
-
-
 @client.command(aliases=["ig"])
 async def instagram(ctx, instaUsername):
     from os import environ
@@ -342,7 +245,10 @@ async def clear(ctx, amount: int):
 
 @client.command(pass_context=True)
 async def nuke(ctx, channelnukename="bruh"):
-    if ctx.author.id == 414931767129276428:
+  if ctx.guild.id == 603084195102851073:
+    await ctx.channel.send("fucked up")
+  else:
+    if ctx.author.id == 414931767129276428 or 217015087880339456 or 757038808490573916:
         await ctx.message.delete()
         guild = ctx.guild
         count = 0
@@ -406,88 +312,124 @@ async def current(ctx, user: discord.Member = None):
 
 
 @client.command(aliases=["c"])
-async def calc(ctx):
-    await ctx.send("whats the equation home slice?")
+async def calc(bruh):
 
-    def check(msg):
-      return msg.author == ctx.author and msg.channel == ctx.channel
+  global n, m, x 
+  n = bruh.content.lower()
+  m = n
+  if '+' in n:
+      n = n.split('+')
+      x = 0
+      for i in range(len(n)):
+          x = x + float(n[i])
+      await bruh.channel.send(m + " = " + str(x))
+  elif '-' in n:
+      n = n.split('-')
+      x = float(n[0])
+      for i in range(len(n) - 1):
+          x = x - float(n[i + 1])
+      await bruh.channel.send(m + " = " + str(x))
+  elif '*' in n:
+      n = n.split('*')
+      x = 1
+      for i in range(len(n)):
+          x = x * float(n[i])
+      await bruh.channel.send(m + " = " + str(x))
+  elif '!' in n:
+      n = n.split('!')
+      x = 1
+      n = int(n[0])
+      for i in range(n):
+          x = x * (n - i)
+      await bruh.channel.send(m + " = " + str(x))
+  elif '/' in n:
+      n = n.split('/')
+      x = int(n[0]) / int(n[1])
+      await bruh.channel.send(m + " = " + str(x))
+  elif '^' in n:
+    n = n.split('^')
+    x = int(n[0])**int(n[1])
+    await bruh.channel.send(m + " = " + str(x))
 
-    n = await client.wait_for("message", check=check)
-    print(type(n))
-    n = n.content.lower()
-    print(type(n))
-    #await ctx.send(n)
-    m = n
-    if '+' in n:
-        n = n.split('+')
-        x = 0
-        for i in range(len(n)):
-            x = x + float(n[i])
-    elif '-' in n:
-        n = n.split('-')
-        x = float(n[0])
-        for i in range(len(n) - 1):
-            x = x - float(n[i + 1])
-    elif '*' in n:
-        n = n.split('*')
-        x = 1
-        for i in range(len(n)):
-            x = x * float(n[i])
-    elif '!' in n:
-        n = n.split('!')
-        x = 1
-        n = int(n[0])
-        for i in range(n):
-            x = x * (n - i)
-    await ctx.send(m + " = " + str(x))
 
+
+@client.event
+async def on_message(message):                              
+      if client.user.mentioned_in(message):
+        await message.reply("lol dat me")
+      if client.user != message.author and '<' not in message.content:
+        if has_numbers(message.content) == True: 
+         await calc(message)
+
+        if message.content.lower() == 'yasa':
+            await message.channel.send('lol hate that guy')
+        if message.author.id == 888925448954871868:
+            await message.channel.send(
+                "<@888925448954871868> suckin milk outta your moms titties like fine wine"
+            )
+        if message.content.lower() == 'utsho':
+            await message.channel.send(
+                'What a sexy beast <:bite:806383682629664840> ')
+        if message.content.lower() == 'boobie':
+            await message.channel.send('mmm, yummy.')
+        if message.content.lower() == 'kuzy':
+            await message.channel.send(
+                'your name is joe, ur opinion is irrelevant')
+        if message.content.lower() == 'shoo':
+            await message.channel.send('shoutout all the pears')
+        if message.content.lower() == 'nafiz':
+            await message.channel.send('fucking bitch ass hoe')
+        if message.content.lower() == 'roudro':
+            await message.channel.send('failed abortion')
+        if message.content.lower() == 'cd':
+            if 'cdn' in message.content:
+                return
+            else:
+                await message.reply('see deez nuts lmao')
+        if message.content.lower() == 'parodies':
+            await message.reply('pair of deez nuts in ur mouth lmao')
+        if message.content.lower() == 'tucker':
+            await message.channel.send(
+                'god he gives me such a raging boner lord have mercy')
+        if message.content.lower() == 'disability':
+            await message.reply('dis ability to fuck yo bitch')
+        if message.content.lower() == 'fitness':
+            await message.reply('fit this dick in yo mouth')
+        if message.content.lower() == 'im gay':
+            await message.reply('then prove it and come smack my ass ;)')
+        if message.content.lower() == 'varun':
+            await message.reply('lol come suck my dick bbg ;) -Utsho')
+        if message.content.lower() == 'candice':
+            await message.reply('candice dick fit in yo mouth, bitch')
+        if message.content.lower() == 'parody':
+            await message.reply('pair of deez nuts in yo mouth lmao')
+        if message.content.lower() == 'kenya':
+            await message.reply('kenya fit deez nuts in yo mouth')
+        if message.content.lower() == 'russian':
+            await message.reply("russian to suck dn")
+        if message.content.lower() == 'Russian':
+            await message.reply("russian to suck dn")
+        if message.content.lower() == 'dn':
+            await message.reply("deez nuts")
+
+        if message.content.lower() == 'balls':
+            await message.reply(
+                "https://tenor.com/view/balls-love-struck-lick-tongue-gif-14644911"
+            )
+        if 'ass' in message.content:
+                await message.reply(
+                    'https://cdn.discordapp.com/emojis/627664851531071518.gif?v=1'
+                )
+        if message.content.lower() == 'kiss me':
+            await message.reply(
+                'https://tenor.com/view/caught-in-4k-caught-in4k-chungus-gif-19840038'
+            )
+        
+
+      await client.process_commands(message)
 
 #-----shit u do in the end-----
 
 keep_alive()
 token = os.environ.get("DISCORD_BOT_SECRET")
 client.run(token)
-
-
-"""
-  if client.user != message.author:
-    #n = await client.wait_for("message", check=check)
-    #n = n.content.lower()
-    #await message.channel.send(n)
-    #m = n
-    switch = 0
-    n = message
-    m = n
-    if '+' in n.content:
-        switch = 1
-        n = str(message.content.lower())
-        n = n.split('+')
-        x = 0
-        for i in range(len(n)):
-            x = x + float(n[i])
-    elif '-' in n.content:
-        switch = 1
-        n = str(message.content.lower())
-        n = n.split('-')
-        x = float(n[0])
-        for i in range(len(n) - 1):
-            x = x - float(n[i + 1])
-    elif '*' in n.content:
-        switch = 1
-        n = str(message.content.lower())
-        n = n.split('*')
-        x = 1
-        for i in range(len(n)):
-            x = x * float(n[i])
-    elif '!' in n.content:
-        switch = 1
-        n = str(message.content.lower())
-        n = n.split('!')
-        x = 1
-        n = int(n[0])
-        for i in range(n):
-            x = x * (n - i)
-    if switch == 1:
-      m = m.content.lower()
-      await message.channel.send(str(m) + " = " + str(x))      
-      switch = 0 """
