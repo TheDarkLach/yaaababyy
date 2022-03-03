@@ -1,0 +1,48 @@
+import discord
+import os
+from keep_alive import keep_alive
+from discord.ext import commands
+import datetime
+from instaloader import Instaloader, Profile
+from discord import Embed
+from discord import Spotify
+import wikipedia
+import sys
+
+
+  
+
+
+
+
+
+@client.event
+async def on_member_update(before, after):
+    channel = client.get_channel(887369792590327871)
+    if before.status is discord.Status.offline and after.status is discord.Status.online:
+        if after.id == 811075449308184648:
+            await move()
+            await channel.send(
+                'AYO! Cerenity is now Online. Please follow evacuation protocols. Thanks and have a great day!',
+                delete_after=10.0)
+
+
+async def move():
+    channel = client.get_channel(604520849621516301)
+    evac = client.get_channel(860338189231194132)
+    Members = channel.members
+    for members in Members:
+        await members.move_to(evac)
+    channel = client.get_channel(755483435656675539)
+    Members = channel.members
+    for members in Members:
+        await members.move_to(evac)
+
+
+async def move2():
+    channel = client.get_channel(860338189231194132)
+    evac = client.get_channel(604520849621516301)
+    Members = channel.members
+    for members in Members:
+        await members.move_to(evac)
+
