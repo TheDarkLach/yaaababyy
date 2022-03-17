@@ -20,17 +20,12 @@ bot.remove_command('help')
 initial_extensions = (
     'delete',
     'mod',
-    'MC',
+    'commands',
     'events',
     'special',
     'social',
+    'test',
 )
-"""
-bot.load_extension("delete")
-bot.load_extension("mod")
-bot.load_extension("MC")
-bot.load_extension("events")
-bot.load_extension("special")"""
 
 
 for extension in initial_extensions:

@@ -67,7 +67,7 @@ class mod(commands.Cog):
   async def timeout(self, ctx, member: discord.Member):
       role = discord.utils.get(ctx.guild.roles, name='Timeout')
       await member.add_roles(role)
-      await ctx.send("Fuck you, bitch")
+      await ctx.send("hahahaha loser")
   
   
   @commands.command()

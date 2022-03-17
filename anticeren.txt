@@ -13,9 +13,6 @@ import sys
   
 
 
-
-
-
 @client.event
 async def on_member_update(before, after):
     channel = client.get_channel(887369792590327871)

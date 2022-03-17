@@ -48,7 +48,11 @@ class events(commands.Cog):
   def __init__(self, bot):
       self.bot = bot
 
-
+  @commands.Cog.listener()
+  async def on_member_join(self, member):
+    role = discord.utils.get(member.guild.roles, name="everyone")
+    await member.add_roles(role)
+  
   @commands.Cog.listener()
   async def on_command_error(self, ctx, error):
       if isinstance(error, commands.MissingPermissions):
@@ -113,12 +117,14 @@ class events(commands.Cog):
           await message.reply('kenya fit deez nuts in yo mouth')
       if message.content.lower() == 'russian':
           await message.reply("russian to suck dn")
-      if message.content.lower() == 'Russian':
+      if message.content.lower() == 'russian':
           await message.reply("russian to suck dn")
       if message.content.lower() == 'dn':
           await message.reply("deez nuts")
       if message.content.lower() == 'pull':
           await message.reply("why don't you pull some bitches")
+      if message.content.lower() == 'milk':
+          await message.reply("0 hoes, ugly ass name")
       if message.content.lower() == 'james':
           await message.reply("fat fucking white bitch whore ass fuck tard cum gobbler no hoes fat fuck musty as hell")
 

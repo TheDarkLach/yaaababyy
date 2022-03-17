@@ -3,6 +3,11 @@ from discord.ext import commands
 import wikipedia
 import os
 import sys
+import asyncio
+import datetime
+
+def restart_bot(): 
+  os.execv(sys.executable, ['python'] + sys.argv)
 
 
 class MC(commands.Cog):
@@ -30,6 +35,7 @@ class MC(commands.Cog):
   async def spam(self, ctx, amount: int, *, message):
       for i in range(amount):
           await ctx.send(message)
+          time.sleep(0.7)
 
       
   @commands.command()
@@ -37,12 +43,12 @@ class MC(commands.Cog):
     name = "'" + name + "'"
     result = wikipedia.summary(name)
     await ctx.send(result)
-
+  
   @commands.command()
-  async def restart(self, ctx):
-    await ctx.send("Restarting...")
-    os.system('python main.py')
-    sys.exit()
+  @commands.has_permissions(administrator=True)
+  async def r(self, ctx):
+    message = await ctx.send("Restarting.")
+    restart_bot()
     
   @commands.command()
   async def deleteon(self, ctx):
@@ -56,7 +62,6 @@ class MC(commands.Cog):
     self.bot.unload_extension("delete")
     
 
-  
 
 def setup(bot):
     bot.add_cog(MC(bot))
