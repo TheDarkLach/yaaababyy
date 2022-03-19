@@ -24,7 +24,7 @@ initial_extensions = (
     'events',
     'special',
     'social',
-    'test',
+    'music',
 )
 
 
