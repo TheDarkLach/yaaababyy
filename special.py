@@ -7,7 +7,7 @@ class special(commands.Cog):
       self.bot = bot
 
 
-  
+
   #purging
   @commands.command(pass_context=True,help = 'purging')
   @commands.has_permissions(administrator=True)

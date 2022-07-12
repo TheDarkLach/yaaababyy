@@ -39,17 +39,20 @@ initial_extensions = (
 @bot.command(help = 'reloads modules')
 @is_owner()
 async def r(ctx):
-  message = ""
+  message = "```diff\n"
   for extension in initial_extensions:
     try:
       bot.unload_extension(extension)
       bot.load_extension(extension)
-      #await ctx.send("reloaded " + extension)
-      message = message + "reloaded " + extension + "\n"
+      message = message + "+ Reloaded " + extension + ".py\n"
     except Exception as e:
-      #await ctx.send(f'Failed to reload extension {extension}.')
-      message = message + "Failed to reload " + extension + "\n"
+      message = message + "- Failed to reload " + extension + ".py\n"
+  message = message + "```"
   await ctx.send(message)
+
+@bot.command()
+async def t(ctx):
+    await ctx.send("```diff\n+ hi\n```")
 
 
 for extension in initial_extensions:
