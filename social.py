@@ -10,8 +10,8 @@ class social(commands.Cog):
   def __init__(self, bot):
       self.bot = bot
       
-
-  @commands.command()
+  
+  @commands.command(help = 'gives kanye quote')
   async def kanyequote(self, ctx):
       kanyeIMGS = [
           "https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTU0OTkwNDUxOTQ5MDUzNDQ3/kanye-west-attends-the-christian-dior-show-as-part-of-the-paris-fashion-week-womenswear-fall-winter-2015-2016-on-march-6-2015-in-paris-france-photo-by-dominique-charriau-wireimage-square.jpg",
@@ -62,7 +62,7 @@ class social(commands.Cog):
       await ctx.channel.send(embed=embed)
 
 
-  @commands.command()
+  @commands.command(help = 'info on a server')
   async def info(self, ctx):
       embed = discord.Embed(title=f"{ctx.guild.name}",
                             description="Server data:",
@@ -78,7 +78,7 @@ class social(commands.Cog):
       await ctx.send(embed=embed)
   
   
-  @commands.command(aliases=["ig"])
+  @commands.command(aliases=["ig"], help = 'lookup an instagram page')
   async def instagram(self, ctx, instaUsername):
       from os import environ
       environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
@@ -97,7 +97,7 @@ class social(commands.Cog):
   
   
   
-  @commands.command(aliases=["listening"])
+  @commands.command(aliases=["listening"], help = 'display current song')
   async def current(self, ctx, user: discord.Member = None):
       if user == None:
           user = ctx.author

