@@ -26,7 +26,7 @@ class special(commands.Cog):
     @commands.command(help='ip')
     async def ip(self, ctx, ip):
         # URL to send the request to
-        key = '981a6c79887c405f8f1509da9a080a5e'
+        key = ''
         response = requests.get('https://ipgeolocation.abstractapi.com/v1/?api_key=' + key + '&ip_address=' + ip)
         result = json.loads(response.content)
         await ctx.send(result)
