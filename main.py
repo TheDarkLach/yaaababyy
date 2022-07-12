@@ -3,6 +3,7 @@ from discord.ext import commands
 import os
 import time
 from pretty_help import DefaultMenu, PrettyHelp
+from dotenv import load_dotenv
 
 intents = discord.Intents().all()
 intents.presences = True
@@ -57,5 +58,6 @@ for extension in initial_extensions:
 menu = DefaultMenu('◀️', '▶️', '❌') # You can copy-paste any icons you want.
 bot.help_command = PrettyHelp(navigation=menu, color=discord.Colour.green(),no_category="Main") 
 
-token = ""
+load_dotenv()
+token = os.getenv("DISCORD_BOT_SECRET")
 bot.run(token)
