@@ -26,7 +26,7 @@ def is_owner():
     return commands.check(predicate)
 
 initial_extensions = (
-    #'delete',
+    'logs',
     'mod',
     'commands',
     'events',
@@ -39,14 +39,17 @@ initial_extensions = (
 @bot.command(help = 'reloads modules')
 @is_owner()
 async def r(ctx):
+  message = ""
   for extension in initial_extensions:
     try:
       bot.unload_extension(extension)
       bot.load_extension(extension)
-      await ctx.send("reloaded " + extension)
-      time.sleep(0.7)
+      #await ctx.send("reloaded " + extension)
+      message = message + "reloaded " + extension + "\n"
     except Exception as e:
-      await ctx.send(f'Failed to reload extension {extension}.')
+      #await ctx.send(f'Failed to reload extension {extension}.')
+      message = message + "Failed to reload " + extension + "\n"
+  await ctx.send(message)
 
 
 for extension in initial_extensions:
