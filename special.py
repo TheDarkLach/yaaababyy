@@ -1,13 +1,20 @@
-import discord
+import itertools
+import sys
+
+from io import StringIO
 from discord.ext import commands
-import asyncio
 import requests
 import json
 
 
+def my_function(result):
+    print(*itertools.chain.from_iterable(result), sep=',')
+
 class special(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+
+
 
     # purging
     @commands.command(pass_context=True, help='purging')
@@ -18,20 +25,6 @@ class special(commands.Cog):
 
     @commands.command(help='ip')
     async def ip(self, ctx, ip):
-
-        # URL to send the request to
-        request_url = 'https://geolocation-db.com/jsonp/' + ip
-        # Send request and decode the result
-        response = requests.get(request_url)
-        result = response.content.decode()
-        # Clean the returned string so it just contains the dictionary data for the IP address
-        result = result.split("(")[1].strip(")")
-        # Convert this data into a dictionary
-        result = json.loads(result)
-        await ctx.send(result)
-
-    @commands.command(help='ip')
-    async def ip2(self, ctx, ip):
         # URL to send the request to
         key = '981a6c79887c405f8f1509da9a080a5e'
         response = requests.get('https://ipgeolocation.abstractapi.com/v1/?api_key=' + key + '&ip_address=' + ip)
