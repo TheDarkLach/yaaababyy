@@ -11,7 +11,7 @@ intents.members = True
 intents.messages = True
 
 
-bot = commands.Bot(command_prefix='=',
+bot = commands.Bot(command_prefix='!',
                       help_command=PrettyHelp(),
                       case_insensitive=True,
                       intents=intents,

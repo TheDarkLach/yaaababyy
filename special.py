@@ -1,14 +1,15 @@
 import itertools
-import sys
+from itertools import chain, cycle
 
-from io import StringIO
+import discord
 from discord.ext import commands
 import requests
 import json
 
 
 def my_function(result):
-    print(*itertools.chain.from_iterable(result), sep=',')
+    print(result)
+
 
 class special(commands.Cog):
     def __init__(self, bot):
@@ -25,11 +26,72 @@ class special(commands.Cog):
 
     @commands.command(help='ip')
     async def ip(self, ctx, ip):
-        # URL to send the request to
+        def delete(ptr2):
+            ptr=1
+            try:
+                with open('test.txt', 'r') as fr:
+                    # reading line by line
+                    lines = fr.readlines()
+
+                    # pointer for position
+
+                    # opening in writing mode
+                    with open('test.txt', 'w') as fw:
+                        for line in lines:
+
+                            # we want to remove 5th line
+                            if ptr != ptr2:
+                                fw.write(line)
+                            ptr += 1
+                print("Deleted")
+
+            except:
+                print("Oops! something error")
+        # 73.240.38.112
+        fields = "country,city,security,region,postal_code,continent,longitude,latitude,security > is_vpn,timezone,currency ,connection"
         key = '981a6c79887c405f8f1509da9a080a5e'
-        response = requests.get('https://ipgeolocation.abstractapi.com/v1/?api_key=' + key + '&ip_address=' + ip)
+        response = requests.get('https://ipgeolocation.abstractapi.com/v1/?api_key=' + key + '&ip_address=' + ip) #+ "&fields=" + fields)
         result = json.loads(response.content)
-        await ctx.send(result)
+
+        with open('test.txt', mode='wb') as file:
+            file.write(response.content)
+
+
+
+        f1 = open('test.txt','r+')
+        input = f1.read()
+        input = input.replace(',',"\n").replace("'","").replace("{","").replace("}","").replace("emoji:","").replace(" name:"," ").replace(" ","").replace(":",": ").replace('"','').replace("security: ","").replace("currency_name: ","")
+        f2 = open("test.txt", "w+")
+        f2.write(input)
+        f1.close()
+        f2.close()
+
+        delete(25)
+        delete(25)
+        delete(10)
+        delete(10)
+        delete(3)
+        delete(5)
+        delete(10)
+        delete(21)
+        delete(21)
+        delete(21)
+        delete(18)
+        delete(18)
+        f1 = open('test.txt', 'r+')
+        result = f1.read()
+        f1.close()
+        """result = str(result)
+        result = ''.join(chain.from_iterable(zip(result.split(','), cycle('\n'))))
+        result = result.replace("'","").replace("{","").replace("}","").replace("emoji:","").replace(" name:"," ")
+        result = result.replace(" ","")
+        result = result.replace(":",": ")"""
+
+        embed = discord.Embed(
+            title=f"{ip}",
+            description=f"{result}",
+            color=0x19B9B9)
+        await ctx.send(embed=embed)
 
     """
     @commands.command(pass_context=True, help = 'heh')

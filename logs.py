@@ -24,6 +24,10 @@ class logs(commands.Cog):
       channel = self.bot.get_channel(996503232694206664)
       if before.author == self.bot.user:
           return
+      elif before.author == 356268235697553409:
+          return
+      elif before.author == 970439744355991612:
+          return
       embed = discord.Embed(
         title="Message edited:",
         description="{0} \n before: **{1}** \n after: **'{2}'**".format(before.author.mention,before.content, after.content),color=0x19B9B9)
