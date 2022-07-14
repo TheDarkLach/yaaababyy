@@ -33,7 +33,8 @@ initial_extensions = (
     'special',
     'social',
     'music',
-    'owner'
+    'owner',
+    'weather',
 )
 
 @bot.command(help = 'reloads modules')

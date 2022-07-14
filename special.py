@@ -1,14 +1,9 @@
-import itertools
-from itertools import chain, cycle
 
+import shutil
 import discord
 from discord.ext import commands
 import requests
 import json
-
-
-def my_function(result):
-    print(result)
 
 
 class special(commands.Cog):
@@ -24,6 +19,15 @@ class special(commands.Cog):
         await ctx.channel.purge(limit=amount)
         await ctx.send(f'Cleared {amount} messages', delete_after=5.0)
 
+    @commands.command(help = 'get an image from url')
+    async def ss(self,ctx,url):
+        response = requests.get('https://screenshot.abstractapi.com/v1/?api_key=5585fee4533943639254ca05fea6f661' + '&url=https://' + url + '/delay=6',stream=True)
+        with open('img.jpeg', 'wb') as out_file:
+            shutil.copyfileobj(response.raw, out_file)
+        del response
+        with open('img.jpeg', "rb") as fh:
+            f = discord.File(fh, filename='img.jpeg')
+        await ctx.send(file=f)
     @commands.command(help='ip')
     async def ip(self, ctx, ip):
         def delete(ptr2):
@@ -81,11 +85,6 @@ class special(commands.Cog):
         f1 = open('test.txt', 'r+')
         result = f1.read()
         f1.close()
-        """result = str(result)
-        result = ''.join(chain.from_iterable(zip(result.split(','), cycle('\n'))))
-        result = result.replace("'","").replace("{","").replace("}","").replace("emoji:","").replace(" name:"," ")
-        result = result.replace(" ","")
-        result = result.replace(":",": ")"""
 
         embed = discord.Embed(
             title=f"{ip}",
