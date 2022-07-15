@@ -1,10 +1,15 @@
+import shutil
+from idlelib.multicall import r
+from urllib.request import urlopen
+from bs4 import BeautifulSoup
 import discord
 from discord.ext import commands
 import wikipedia
 import os
 import sys
 import requests
-from random import choice, randint, random, shuffle
+from random import choice, randint, random, shuffle,randint
+import wget
 
 def restart_bot(): 
   os.execv(sys.executable, ['python'] + sys.argv)
@@ -55,6 +60,128 @@ class MC(commands.Cog):
   @commands.command(help = 'check bots ping') 
   async def ping(self, ctx):
     await ctx.send(f'Bruh: {round(self.bot.latency * 1000)} ms')
+
+  @commands.command(help='duck')
+  async def duck(self,ctx):
+      num = randint(0,56)
+      response2 = 'https://random-d.uk/api/v2/' + str(num) + '.gif'
+      await ctx.send(response2)
+
+  @commands.command(help="random animal picture and facts")
+  async def animal(self,ctx):
+    url = "https://zoo-animal-api.herokuapp.com/animals/rand"
+    response = requests.get(url)
+    with open('animal.txt', mode='wb') as file:
+        file.write(response.content)
+    f1 = open('animal.txt', 'r+')
+    input = f1.read()
+    input = input.replace('"', "\n").replace('{','').replace('}','').replace(',','').replace('latin_name','').replace('name','')\
+        .replace('anime_type','').replace('active_time','').replace('length_min','').replace('length_max','').replace('animal_type','').replace('weight_min','')\
+        .replace('weight_max','').replace('lifespan','').replace('habitat','').replace('diet','').replace('geo_range','')\
+        .replace('image_link','')#.replace(':','')
+    f2 = open("animal.txt", "w+")
+    f2.write(input)
+    f1.close()
+    f2.close()
+
+    #remoec empty lines
+    output=''
+    with open("animal.txt") as f:
+        for line in f:
+            if not line.isspace():
+                output += line
+
+    f = open("animal.txt", "w")
+    f.write(output)
+    f.close()
+
+    #delete last line cuz id line
+    fd = open("animal.txt", "r")
+    d = fd.read()
+    fd.close()
+    m = d.split("\n")
+    s = "\n".join(m[:-2])
+    fd = open("animal.txt", "w+")
+    for i in range(len(s)):
+        fd.write(s[i])
+    fd.close()
+
+    #removing every other cuz of :, cant remove that with replace cuz link breaks
+    fn = open('animal.txt', 'r')
+
+    # open other file in write mode
+    fn1 = open('animal2.txt', 'w')
+
+    # read the content of the file line by line
+    cont = fn.readlines()
+    type(cont)
+    for i in range(0, len(cont)):
+        if (i % 2 != 0):
+            fn1.write(cont[i])
+        else:
+            pass
+
+    # close the file
+    fn1.close()
+
+
+    #set all variable
+    #link should be last line?
+    with open('animal.txt') as f:
+        for line in f:
+            pass
+        link = line
+
+
+    with open('animal2.txt') as f:
+        for i, line in enumerate(f, 1):
+            if i == 1:
+                break
+    name = line
+
+    with open('animal2.txt') as f:
+        for i, line in enumerate(f, 1):
+            if i == 2:
+                break
+    lname = line
+
+    with open('animal2.txt') as f:
+        for i, line in enumerate(f, 1):
+            if i == 3:
+                break
+    atype = line
+
+    with open('animal2.txt') as f:
+        for i, line in enumerate(f, 1):
+            if i == 4:
+                break
+    time = line
+
+    with open('animal2.txt') as f:
+        for i, line in enumerate(f, 1):
+            if i == 5:
+                break
+    length = line
+
+    with open('animal2.txt') as f:
+        for i, line in enumerate(f, 1):
+            if i == 6:
+                break
+    weight = line
+
+
+
+    embed = discord.Embed(title=f"{name}", description=f"_{lname}_", color=0x19B9B9)
+    embed.add_field(name="Animal Type", value=f"{atype}", inline=True)
+    embed.add_field(name="Active Time", value=f"{time}", inline=True)
+    embed.add_field(name="\u200B", value="\u200B")  # newline
+    embed.add_field(name="Max Length ft.", value=f"{length}", inline=True)
+    embed.add_field(name="Max Weight lbs.", value=f"{weight}", inline=True)
+    embed.set_thumbnail(url=link)
+    embed.set_footer(text=':)')
+
+    await ctx.send(embed=embed)
+
 
 
   @commands.command(help = 'roasts a user')

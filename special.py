@@ -6,6 +6,10 @@ import requests
 import json
 
 
+def my_function(result):
+    print(result)
+
+
 class special(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -21,10 +25,13 @@ class special(commands.Cog):
 
     @commands.command(help = 'get an image from url')
     async def ss(self,ctx,url):
-        response = requests.get('https://screenshot.abstractapi.com/v1/?api_key=5585fee4533943639254ca05fea6f661' + '&url=https://' + url + '/delay=6',stream=True)
+        response = requests.get('https://screenshot.abstractapi.com/v1/?api_key=5585fee4533943639254ca05fea6f661' + '&url=https://' + url + '&delay=05',stream=True)
         with open('img.jpeg', 'wb') as out_file:
             shutil.copyfileobj(response.raw, out_file)
         del response
+        #print(response.status_code)
+        #print(response.content)
+        #await ctx.send(response.content)
         with open('img.jpeg', "rb") as fh:
             f = discord.File(fh, filename='img.jpeg')
         await ctx.send(file=f)
