@@ -33,6 +33,7 @@ initial_extensions = (
     'music',
     'owner',
     'weather',
+    'minecraft',
 )
 
 @bot.command(help = 'reloads modules')
