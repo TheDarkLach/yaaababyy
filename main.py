@@ -1,7 +1,6 @@
 import discord
 from discord.ext import commands
 import os
-import time
 from pretty_help import DefaultMenu, PrettyHelp
 from dotenv import load_dotenv
 
@@ -16,7 +15,6 @@ bot = commands.Bot(command_prefix='!',
                       case_insensitive=True,
                       intents=intents,
                       allowed_mentions=discord.AllowedMentions(everyone=True))
-#bot.remove_command('help')
 
 def is_owner():
     """Check if a user is the bot owner"""

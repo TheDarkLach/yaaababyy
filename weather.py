@@ -1,10 +1,6 @@
-
 from discord.ext import commands
 import discord
 import requests
-
-
-
 
 class weather(commands.Cog):
   def __init__(self, bot):
@@ -58,9 +54,6 @@ class weather(commands.Cog):
                       break
           humid = line
 
-
-
-
           city = result['location']['name']
           country = result['location']['country']
           region = result['location']['region']
@@ -75,7 +68,6 @@ class weather(commands.Cog):
           set = rise.replace('"sunset":', '').replace(',', '').replace('"','')
           humid = humid.replace('"humidity":','').replace(',','')
           icon = "http:" + icon
-          print(icon)
 
           embed = discord.Embed(title=f"{city}, {region}"' Weather', description=f"{country}", color=0x19B9B9)
           embed.add_field(name="Current Temperature F°", value=f"{fahrenheit}", inline=True)
@@ -89,7 +81,6 @@ class weather(commands.Cog):
           embed.add_field(name="\u200B", value="\u200B")  # newline
           embed.add_field(name="Sunrise", value=f"{rise}", inline=True)
           embed.add_field(name="Sunset", value=f"{set}", inline=True)
-
 
           embed.set_thumbnail(url=icon)
           embed.set_footer(text='Time: 'f"{time}")

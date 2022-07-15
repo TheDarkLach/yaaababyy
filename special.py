@@ -1,4 +1,3 @@
-
 import discord
 from discord.ext import commands
 import requests
@@ -8,8 +7,6 @@ import json
 class special(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-
-
 
     # purging
     @commands.command(pass_context=True, help='purging')

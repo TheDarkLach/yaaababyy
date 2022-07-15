@@ -8,10 +8,6 @@ import requests
 from random import choice, randint
 
 
-def restart_bot():
-    os.execv(sys.executable, ['python'] + sys.argv)
-
-
 class MC(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
