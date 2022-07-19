@@ -15,44 +15,6 @@ class weather(commands.Cog):
           complete_url = base_url + "&q=" + city
           response = requests.get(complete_url)
           result = response.json()
-          #print(result)
-          with open('test.txt', mode='wb') as file:
-              file.write(response.content)
-
-          f1 = open('test.txt', 'r+')
-          input = f1.read()
-          input = input.replace('{', "{\n").replace(',',',\n')
-          f2 = open("test.txt", "w+")
-          f2.write(input)
-          f1.close()
-          f2.close()
-
-          with open('test.txt') as f:
-              for i, line in enumerate(f, 1):
-                  if i == 44:
-                      break
-          max = line
-          print(max)
-          with open('test.txt') as f:
-              for i, line in enumerate(f, 1):
-                  if i == 46:
-                      break
-          min = line
-          with open('test.txt') as f:
-              for i, line in enumerate(f, 1):
-                  if i == 66:
-                      break
-          rise = line
-          with open('test.txt') as f:
-              for i, line in enumerate(f, 1):
-                  if i == 67:
-                      break
-          set = line
-          with open('test.txt') as f:
-              for i, line in enumerate(f, 1):
-                  if i == 29:
-                      break
-          humid = line
 
           city = result['location']['name']
           country = result['location']['country']
@@ -62,11 +24,12 @@ class weather(commands.Cog):
           fahrenheit = result['current']['temp_f']
           fflike = result['current']['feelslike_f']
           icon = result['current']['condition']['icon']
-          max = max.replace('"maxtemp_f":','').replace(',','')
-          min = min.replace('"mintemp_f":', '').replace(',', '')
-          rise = rise.replace('"sunrise":','').replace(',','').replace('"','')
-          set = rise.replace('"sunset":', '').replace(',', '').replace('"','')
-          humid = humid.replace('"humidity":','').replace(',','')
+          max = result['forecast']['forecastday'][0]['day']['maxtemp_f']
+          min = result['forecast']['forecastday'][0]['day']['mintemp_f']
+          rise = result['forecast']['forecastday'][0]['astro']['sunrise']
+          set = result['forecast']['forecastday'][0]['astro']['sunset']
+          humid = result['forecast']['forecastday'][0]['day']['avghumidity']
+          icon = result['forecast']['forecastday'][0]['day']['condition']['icon']
           icon = "http:" + icon
 
           embed = discord.Embed(title=f"{city}, {region}"' Weather', description=f"{country}", color=0x19B9B9)

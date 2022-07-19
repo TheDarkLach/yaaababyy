@@ -1,7 +1,7 @@
 from discord.ext import commands
 import discord
 
-
+"""
 def has_numbers(inputString):
     return any(char.isdigit() for char in inputString)
 
@@ -42,7 +42,7 @@ async def calc(bruh):
     elif '^' in n:
         n = n.split('^')
         x = int(n[0]) ** int(n[1])
-        await bruh.channel.send(m + " = " + str(x))
+        await bruh.channel.send(m + " = " + str(x))"""
 
 
 class events(commands.Cog):
@@ -70,14 +70,14 @@ class events(commands.Cog):
             await message.reply("lol dat me")
         
 
-        if self.bot.user != message.author and '<' not in message.content:
+        '''if self.bot.user != message.author and '<' not in message.content:
             if has_numbers(message.content) == True:
                 for i in message.content:
                     if i.lower() in letter:
                         break
                     else:
                         await calc(message)
-                        break
+                        break'''
 
         if message.content.lower() == 'yasa':
             await message.channel.send('lol hate that guy')
@@ -129,8 +129,6 @@ class events(commands.Cog):
             await message.reply('kenya fit deez nuts in yo mouth')
         if message.content.lower() == 'russian':
             await message.reply("russian to suck dn")
-        if message.content.lower() == 'russian':
-            await message.reply("russian to suck dn")
         if message.content.lower() == 'dn':
             await message.reply("deez nuts")
         if message.content.lower() == 'pull':
@@ -147,7 +145,7 @@ class events(commands.Cog):
             )
         if 'ass' in message.content:
             await message.reply(
-                # 'https://cdn.discordapp.com/emojis/627664851531071518.gif?v=1'
+                 'https://cdn.discordapp.com/emojis/627664851531071518.gif?v=1'
             )
         if message.content.lower() == 'kiss me':
             await message.reply(

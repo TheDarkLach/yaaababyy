@@ -10,7 +10,7 @@ class logs(commands.Cog):
     channel = self.bot.get_channel(996503232694206664)
     if message.author == self.bot.user:
         return
-    elif "YAG" in str(message.author):
+    elif message.author.bot ==True:
         return
     embed = discord.Embed(
         title="Deleted message!",
@@ -24,9 +24,7 @@ class logs(commands.Cog):
       channel = self.bot.get_channel(996503232694206664)
       if before.author == self.bot.user:
           return
-      elif before.author == 356268235697553409:
-          return
-      elif before.author == 970439744355991612:
+      elif before.author.bot:
           return
       embed = discord.Embed(
         title="Message edited:",

@@ -34,6 +34,7 @@ initial_extensions = (
     'owner',
     'weather',
     'minecraft',
+    'pokemon',
 )
 
 @bot.command(help = 'reloads modules')
