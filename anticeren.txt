@@ -1,16 +1,5 @@
-import discord
-import os
-from keep_alive import keep_alive
-from discord.ext import commands
-import datetime
-from instaloader import Instaloader, Profile
-from discord import Embed
-from discord import Spotify
-import wikipedia
-import sys
-
-
-  
+old code for something, keeping this around as a txt cuz it was a cool concept
+moves all users from a public vc to a private one when a user gets on (from offline to online)
 
 
 @client.event

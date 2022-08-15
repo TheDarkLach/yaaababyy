@@ -74,7 +74,7 @@ class MC(commands.Cog):
         response2 = 'https://random-d.uk/api/v2/' + str(num) + '.gif'
         await ctx.send(response2)
 
-
+    #I should really redo this ngl
     @commands.command(help="random animal picture and facts")
     async def animal(self, ctx):
         url = "https://zoo-animal-api.herokuapp.com/animals/rand"
@@ -211,11 +211,11 @@ class MC(commands.Cog):
 
         await ctx.send(embed=embed)
 
-
-    @commands.command(help='roasts a user')
+    #dumb
+    """@commands.command(help='roasts a user')
     async def roast(self, ctx, user: discord.User):
         insult = requests.get("https://evilinsult.com/generate_insult.php?lang=en&type=json").json()["insult"]
-        await ctx.send(f"Ayo {user.mention}, " + str(insult).lower())
+        await ctx.send(f"Ayo {user.mention}, " + str(insult).lower())"""
 
 
     @commands.command(aliases=['guilds'], help='list all servers')

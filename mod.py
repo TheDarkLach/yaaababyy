@@ -25,12 +25,12 @@ class mod(commands.Cog):
       await user.ban(reason=reason)
       embed = discord.Embed(
           title="Banned!",
-          description="**{0}** was banned for **'{1}'** lol fuckin loser".format(
+          description="**{0}** was banned for **'{1}'** ".format(
               user, reason),
           color=0x19B9B9)
       await ctx.channel.send(embed=embed)
   
-  @commands.command(help = 'ban through id')
+  @commands.command(help = 'ban through id (idt this works)')
   @commands.has_permissions(ban_members=True)
   async def banid(self, ctx, id: int, *, reason="No reason"):
     user = await commands.fetch_user(id)
@@ -40,7 +40,7 @@ class mod(commands.Cog):
       await ctx.guild.ban(user,reason=reason)
       embed = discord.Embed(
           title="Banned!",
-          description="**{0}** was banned for **'{1}'** lol fuckin loser".format(
+          description="**{0}** was banned for **'{1}'**".format(
               user, reason),
           color=0x19B9B9)
       await ctx.channel.send(embed=embed)
@@ -54,7 +54,7 @@ class mod(commands.Cog):
       await ctx.channel.send("{0} has been unbanned".format(user.mention))
   
   
-  @commands.command(help = 'what do you think?')
+  @commands.command(help = 'probably mutes a user')
   @commands.has_permissions(ban_members=True)
   async def mute(self, ctx, member: discord.Member):
       role = discord.utils.get(ctx.guild.roles, name='Muted')
@@ -70,7 +70,7 @@ class mod(commands.Cog):
       await ctx.send("hahahaha loser")
   
   
-  @commands.command(help = 'literally self explanatory')
+  @commands.command(help = 'probably unmuted a user')
   @commands.has_permissions(ban_members=True)
   async def unmute(self, ctx, member: discord.Member):
       role = discord.utils.get(ctx.guild.roles, name='Muted')

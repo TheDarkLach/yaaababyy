@@ -38,7 +38,7 @@ class owner(commands.Cog):
           await user.ban(reason=reason)
           embed = discord.Embed(
               title="Banned!",
-              description="**{0}** was banned for **'{1}'** lol fuckin loser".format(
+              description="**{0}** was banned for **'{1}'**".format(
                   user, reason),
               color=0x19B9B9)
           await ctx.channel.send(embed=embed)
