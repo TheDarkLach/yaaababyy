@@ -23,6 +23,13 @@ def is_owner():
 
     return commands.check(predicate)
 
+
+
+@bot.event
+async def on_ready():
+  print("Logged in as: " + str(bot.user))
+  await bot.change_presence(activity=discord.Game(name="Ur Mom"))
+
 initial_extensions = (
     'logs',
     'mod',
