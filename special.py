@@ -36,7 +36,6 @@ class special(commands.Cog):
                             if ptr != ptr2:
                                 fw.write(line)
                             ptr += 1
-                print("Deleted")
 
             except:
                 print("Oops! something error")

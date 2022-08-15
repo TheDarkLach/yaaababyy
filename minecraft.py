@@ -28,7 +28,7 @@ class minecraft(commands.Cog):
             with open("mc.png", 'wb') as f:
                 shutil.copyfileobj(BytesIO(response.content), f)
         else:
-            print('Image Couldn\'t be retrieved')
+            print('Image Couldn\'t be retrieved :(')
         with open('mc.png', "rb") as fh:
             f = discord.File(fh, filename='mc.png')
         await ctx.send(file=f)

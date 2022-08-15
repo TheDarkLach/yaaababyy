@@ -258,7 +258,6 @@ class MC(commands.Cog):
         list=""
         for member in ctx.guild.members:
             list = list + ", " + member.name
-        print(list)
         await ctx.send(list)
         
 
