@@ -253,6 +253,15 @@ class MC(commands.Cog):
         await ctx.send("deleting off")
         self.bot.unload_extension("delete")
 
+    @commands.command(help="member list")
+    async def members(self,ctx):
+        list=""
+        for member in ctx.guild.members:
+            list = list + ", " + member.name
+        print(list)
+        await ctx.send(list)
+        
+
 
 def setup(bot):
     bot.add_cog(MC(bot))

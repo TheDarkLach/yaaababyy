@@ -143,10 +143,10 @@ class events(commands.Cog):
             await message.reply(
                 "https://tenor.com/view/balls-love-struck-lick-tongue-gif-14644911"
             )
-        if 'ass' in message.content:
+        """if 'ass' in message.content:
             await message.reply(
                  'https://cdn.discordapp.com/emojis/627664851531071518.gif?v=1'
-            )
+            )"""
         if message.content.lower() == 'kiss me':
             await message.reply(
                 'https://tenor.com/view/caught-in-4k-caught-in4k-chungus-gif-19840038'
