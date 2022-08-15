@@ -34,7 +34,7 @@ class automod(commands.Cog):
             #print(json.dumps(response, indent=2))
             if result >= 0.7:
                 embed = discord.Embed(title=f"{message.author}, please tone it down", description=f"your toxicity score was {result}", color=0x19B9B9)
-                await message.channel.send(embed=embed)
+                await message.reply(embed=embed)
         except:
             print("something went wrong")
 
