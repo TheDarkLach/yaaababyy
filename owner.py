@@ -1,7 +1,5 @@
 import discord
 from discord.ext import commands
-  
-
 
 def is_owner():
     """Check if a user is the bot owner"""
@@ -44,7 +42,7 @@ class owner(commands.Cog):
           await ctx.channel.send(embed=embed)
     
     
-def setup(bot):
-    bot.add_cog(owner(bot))
+async def setup(bot):
+    await bot.add_cog(owner(bot))
 
 

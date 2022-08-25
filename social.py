@@ -122,5 +122,5 @@ class social(commands.Cog):
       else:
           commands.send("Bruh your activity empty")
 
-def setup(bot):
-    bot.add_cog(social(bot))
+async def setup(bot):
+    await bot.add_cog(social(bot))

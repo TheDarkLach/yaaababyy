@@ -86,5 +86,5 @@ class events(commands.Cog):
                 'https://tenor.com/view/caught-in-4k-caught-in4k-chungus-gif-19840038'
             )
 
-def setup(bot):
-    bot.add_cog(events(bot))
+async def setup(bot):
+    await bot.add_cog(events(bot))

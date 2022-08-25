@@ -29,6 +29,11 @@ def is_owner():
 async def on_ready():
   print("Logged in as: " + str(bot.user))
   await bot.change_presence(activity=discord.Game(name="Ur Mom"))
+  for extension in initial_extensions:
+      try:
+          await bot.load_extension(extension)
+      except Exception as e:
+          print(f'Failed to load extension {extension}.')
 
 initial_extensions = (
     'logs',
@@ -51,8 +56,8 @@ async def r(ctx):
   message = "```diff\n"
   for extension in initial_extensions:
     try:
-      bot.unload_extension(extension)
-      bot.load_extension(extension)
+      await bot.unload_extension(extension)
+      await bot.load_extension(extension)
       message = message + "+ Reloaded " + extension + ".py\n"
     except Exception as e:
       message = message + "- Failed to reload " + extension + ".py\n"
@@ -64,11 +69,6 @@ async def t(ctx):
     await ctx.send("```diff\n+ hi\n```")
 
 
-for extension in initial_extensions:
-  try:
-    bot.load_extension(extension)
-  except Exception as e:
-    print(f'Failed to load extension {extension}.')
 
 menu = DefaultMenu('◀️', '▶️', '❌') # You can copy-paste any icons you want.
 bot.help_command = PrettyHelp(navigation=menu, color=discord.Colour.green(),no_category="Main") 

@@ -97,5 +97,5 @@ class special(commands.Cog):
                 await ctx.send("Bruh")
 
 
-def setup(bot):
-    bot.add_cog(special(bot))
+async def setup(bot):
+    await bot.add_cog(special(bot))

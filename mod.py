@@ -86,5 +86,5 @@ class mod(commands.Cog):
       await ctx.send("FREED")
 
 
-def setup(bot):
-    bot.add_cog(mod(bot))
+async def setup(bot):
+    await bot.add_cog(mod(bot))

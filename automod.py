@@ -38,5 +38,5 @@ class automod(commands.Cog):
             print("something went wrong")
 
 
-def setup(bot):
-    bot.add_cog(automod(bot))
+async def setup(bot):
+    await bot.add_cog(automod(bot))
