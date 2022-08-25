@@ -30,8 +30,7 @@ class automod(commands.Cog):
             )
             response = client.comments().analyze(body=analyze_request).execute()
             result = response['attributeScores']['TOXICITY']['summaryScore']['value']
-            print(result)
-            #print(json.dumps(response, indent=2))
+
             if result >= 0.85:
                 embed = discord.Embed(title=f"{message.author}, please tone it down", description=f"your toxicity score was {result}", color=0x19B9B9)
                 await message.reply(embed=embed)
