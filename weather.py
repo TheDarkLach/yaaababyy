@@ -1,4 +1,4 @@
-from discord.ext import commands
+from discord.ext import commands,bridge
 import discord
 import requests
 
@@ -7,7 +7,7 @@ class weather(commands.Cog):
       self.bot = bot
 
 
-  @commands.command(help = 'weather')
+  @bridge.bridge_command(help = 'weather')
   async def weather(self,ctx,*,city):
       try:
           base_url = "http://api.weatherapi.com/v1/forecast.json?key=713f2531413e4f02b95200222221407"
@@ -48,13 +48,13 @@ class weather(commands.Cog):
           embed.set_thumbnail(url=icon)
           embed.set_footer(text='Time: 'f"{time}")
 
-          await ctx.send(embed=embed)
+          await ctx.respond(embed=embed)
       except:
           embed = discord.Embed(title="No response", color=0x19B9B9)
           embed.add_field(name="Error", value="Please enter a city name", inline=True)
-          await ctx.send(embed=embed)
+          await ctx.respond(embed=embed)
 
 
-async def setup(bot):
-    await bot.add_cog(weather(bot))
+def setup(bot):
+    bot.add_cog(weather(bot))
 

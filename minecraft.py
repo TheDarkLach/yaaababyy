@@ -2,14 +2,14 @@ import json
 import shutil
 import discord
 import requests
-from discord.ext import commands
+from discord.ext import commands,bridge
 from io import BytesIO
 
 class minecraft(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(help="mc skin renders")
+    @bridge.bridge_command(help="mc skin renders")
     async def skin(self,ctx,user):
         url = "https://api.mojang.com/users/profiles/minecraft/" + user
         response = requests.get(url)
@@ -31,9 +31,9 @@ class minecraft(commands.Cog):
             print('Image Couldn\'t be retrieved :(')
         with open('mc.png', "rb") as fh:
             f = discord.File(fh, filename='mc.png')
-        await ctx.send(file=f)
+        await ctx.respond(file=f)
 
 
 
-async def setup(bot):
-    await bot.add_cog(minecraft(bot))
+def setup(bot):
+    bot.add_cog(minecraft(bot))

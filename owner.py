@@ -1,5 +1,5 @@
 import discord
-from discord.ext import commands
+from discord.ext import commands, bridge
 
 def is_owner():
     """Check if a user is the bot owner"""
@@ -13,21 +13,20 @@ class owner(commands.Cog):
   def __init__(self, bot):
       self.bot = bot
 
-  @commands.command()
+  @bridge.bridge_command()
   @is_owner()
   async def test(self,ctx):
-    await ctx.send("Test")
+    await ctx.respond("Test")
 
 
-  @commands.command()
+  @bridge.bridge_command()
   @is_owner()
   async def okick(self, ctx, user: discord.Member, *, reason="No reason"):
       await user.kick(reason=reason)
       embed = discord.Embed(title="Kicked!",description="**{0}** was kicked for **'{1}'**".format(user, reason),color=0x19B9B9)
-      await ctx.channel.send(embed=embed)
+      await ctx.channel.respond(embed=embed)
 
-
-  @commands.command()
+  @bridge.bridge_command()
   @is_owner()
   async def oban(self, ctx, user: discord.Member = None, *, reason="No reason"):
       if user == None:
@@ -39,10 +38,10 @@ class owner(commands.Cog):
               description="**{0}** was banned for **'{1}'**".format(
                   user, reason),
               color=0x19B9B9)
-          await ctx.channel.send(embed=embed)
+          await ctx.channel.respond(embed=embed)
     
     
-async def setup(bot):
-    await bot.add_cog(owner(bot))
+def setup(bot):
+    bot.add_cog(owner(bot))
 
 

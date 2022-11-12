@@ -165,14 +165,14 @@ class VoiceState:
                             try:
                                 source = await ytdl.YTDLSource.create_source(ctx, next_song, loop=self.bot.loop)
                             except ytdl.YTDLError as e:
-                                await ctx.send('An error occurred while processing this request: {}'.format(str(e)))
+                                await ctx.respond('An error occurred while processing this request: {}'.format(str(e)))
                                 self.bot.loop.create_task(self.stop())
                                 self.exists = False
                                 return
                             else:
                                 song = Song(source)
                                 self.current = song
-                                await ctx.send('Autoplaying {}'.format(str(source)))
+                                await ctx.respond('Autoplaying {}'.format(str(source)))
 
                 else:
                     try:

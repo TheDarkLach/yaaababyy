@@ -1,6 +1,6 @@
 import shutil
 import discord
-from discord.ext import commands
+from discord.ext import commands,bridge
 import wikipedia
 import requests
 from random import choice, randint
@@ -11,7 +11,7 @@ class MC(commands.Cog):
         self.bot = bot
 
 
-    @commands.command(help='get an image from url')
+    @bridge.bridge_command(help='get an image from url')
     async def ss(self, ctx, url):
         response = requests.get(
             'https://api.apiflash.com/v1/urltoimage?access_key=64a2300d43cc4e0781553dc176b28874&url=https://' + url + '&delay=3',
@@ -21,10 +21,10 @@ class MC(commands.Cog):
         del response
         with open('img.jpeg', "rb") as fh:
             f = discord.File(fh, filename='img.jpeg')
-        await ctx.send(file=f)
+        await ctx.respond(file=f)
 
 
-    @commands.command(help='Rolls a dice, can specify sides: d4,d6,d8,d10,d12,d20,d00(100)')
+    @bridge.bridge_command(help='Rolls a dice, can specify sides: d4,d6,d8,d10,d12,d20,d00(100)')
     async def roll(self, ctx, *args):
         diceSize = {
             "d4": 4,
@@ -43,7 +43,7 @@ class MC(commands.Cog):
             diceNum = int(args[1])
         except KeyError:
             if not str(args[0]).isdigit():
-                ctx.send("bruh")
+                ctx.respond("bruh")
             diceNum = int(args[0])
         except (IndexError, ValueError):
             diceNum = 1
@@ -55,27 +55,27 @@ class MC(commands.Cog):
             + ("%" if selSize == 100 else "")
             for i in range(diceNum)
         ]
-        return await ctx.send("You rolled {}".format(", ".join(results)))
+        return await ctx.respond("You rolled {}".format(", ".join(results)))
 
 
-    @commands.command(help='flips a coin')
+    @bridge.bridge_command(help='flips a coin')
     async def flip(self, ctx):
-        await ctx.reply(f"You got {choice(['heads', 'tails'])}!")
+        await ctx.respond(f"You got {choice(['heads', 'tails'])}!")
 
-
-    @commands.command(help='check bots ping')
+    @bridge.bridge_command(help='check bots ping')
     async def ping(self, ctx):
-        await ctx.send(f'Bruh: {round(self.bot.latency * 1000)} ms')
+        await ctx.respond(f'Bruh: {round(self.bot.latency * 1000)} ms')
 
 
-    @commands.command(help='duck')
+    @bridge.bridge_command(help='duck')
     async def duck(self, ctx):
         num = randint(0, 56)
         response2 = 'https://random-d.uk/api/v2/' + str(num) + '.gif'
-        await ctx.send(response2)
+        await ctx.respond(response2)
 
     #I should really redo this ngl
-    @commands.command(help="random animal picture and facts")
+    #i will redo this at some point i swear (comment made like 6 months after previous)
+    @bridge.bridge_command(help="random animal picture and facts")
     async def animal(self, ctx):
         url = "https://zoo-animal-api.herokuapp.com/animals/rand"
         response = requests.get(url)
@@ -209,7 +209,7 @@ class MC(commands.Cog):
         embed.set_thumbnail(url=link)
         embed.set_footer(text=':)')
 
-        await ctx.send(embed=embed)
+        await ctx.respond(embed=embed)
 
     #dumb
     """@commands.command(help='roasts a user')
@@ -218,39 +218,39 @@ class MC(commands.Cog):
         await ctx.send(f"Ayo {user.mention}, " + str(insult).lower())"""
 
 
-    @commands.command(aliases=['guilds'], help='list all servers')
+    @bridge.bridge_command(aliases=['guilds'], help='list all servers')
     async def servers(self, ctx):
         msg = '```js\n'
         msg += '{!s:19s} | {!s:>5s} | {} | {}\n'.format('ID', 'Members', 'Name', 'Owner')
         for guild in self.bot.guilds:
             msg += '{!s:19s} | {!s:>5s}| {} | {}\n'.format(guild.id, guild.member_count, guild.name, guild.owner)
         msg += '```'
-        await ctx.send(msg)
+        await ctx.respond(msg)
 
 
-    @commands.command(help='monke spin')
+    @bridge.bridge_command(help='monke spin')
     async def spin(self, ctx):
-        await ctx.channel.send(
+        await ctx.respond(
             "  https://tenor.com/view/monke-spin-spinning-monkey-spinning-monke-gif-20299211"
         )
 
 
-    @commands.command(help='look something up on wikipedia')
+    @bridge.bridge_command(help='look something up on wikipedia')
     async def wiki(self, ctx, name):
         name = "'" + name + "'"
         result = wikipedia.summary(name)
-        await ctx.send(result)
+        await ctx.respond(result)
 
 
-    @commands.command(help='enable message logging')
+    @bridge.bridge_command(help='enable message logging')
     async def deleteon(self, ctx):
-        await ctx.send("deleting on")
+        await ctx.respond("deleting on")
         self.bot.load_extension("delete")
 
 
-    @commands.command(help='disable message logging')
+    @bridge.bridge_command(help='disable message logging')
     async def deleteoff(self, ctx):
-        await ctx.send("deleting off")
+        await ctx.respond("deleting off")
         self.bot.unload_extension("delete")
 
     @commands.command(help="member list")
@@ -258,9 +258,9 @@ class MC(commands.Cog):
         list=""
         for member in ctx.guild.members:
             list = list + ", " + member.name
-        await ctx.send(list)
+        await ctx.respond(list)
         
 
 
-async def setup(bot):
-    await bot.add_cog(MC(bot))
+def setup(bot):
+    bot.add_cog(MC(bot))

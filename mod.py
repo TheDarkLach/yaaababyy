@@ -1,11 +1,11 @@
-from discord.ext import commands
+from discord.ext import commands,bridge
 import discord
 
 class mod(commands.Cog):
   def __init__(self, bot):
       self.bot = bot
     
-  @commands.command(help = 'kick')
+  @bridge.bridge_command(help = 'kick')
   @commands.has_permissions(kick_members=True)
   async def kick(self, ctx, user: discord.Member, *, reason="No reason"):
       await user.kick(reason=reason)
@@ -13,10 +13,10 @@ class mod(commands.Cog):
           title="Kicked!",
           description="**{0}** was kicked for **'{1}'**".format(user, reason),
           color=0x19B9B9)
-      await ctx.channel.send(embed=embed)
+      await ctx.channel.respond(embed=embed)
   
   
-  @commands.command(help = 'ban')
+  @bridge.bridge_command(help = 'ban')
   @commands.has_permissions(ban_members=True)
   async def ban(self, ctx, user: discord.Member = None, *, reason="No reason"):
     if user == None:
@@ -28,9 +28,9 @@ class mod(commands.Cog):
           description="**{0}** was banned for **'{1}'** ".format(
               user, reason),
           color=0x19B9B9)
-      await ctx.channel.send(embed=embed)
-  
-  @commands.command(help = 'ban through id (idt this works)')
+      await ctx.channel.respond(embed=embed)
+
+  @bridge.bridge_command(help = 'ban through id (idt this works)')
   @commands.has_permissions(ban_members=True)
   async def banid(self, ctx, id: int, *, reason="No reason"):
     user = await commands.fetch_user(id)
@@ -43,48 +43,48 @@ class mod(commands.Cog):
           description="**{0}** was banned for **'{1}'**".format(
               user, reason),
           color=0x19B9B9)
-      await ctx.channel.send(embed=embed)
+      await ctx.channel.respons(embed=embed)
   
   
-  @commands.command(help = 'unban')
+  @bridge.bridge_command(help = 'unban')
   @commands.has_permissions(ban_members=True)
   async def unban(self, ctx, id: int):
       user = await commands.fetch_user(id)
       await ctx.guild.unban(user)
-      await ctx.channel.send("{0} has been unbanned".format(user.mention))
+      await ctx.channel.respond("{0} has been unbanned".format(user.mention))
   
   
-  @commands.command(help = 'probably mutes a user')
+  @bridge.bridge_command(help = 'probably mutes a user')
   @commands.has_permissions(ban_members=True)
   async def mute(self, ctx, member: discord.Member):
       role = discord.utils.get(ctx.guild.roles, name='Muted')
       await member.add_roles(role)
-      await ctx.send("free my mans he aint do none")
+      await ctx.respond("free my mans he aint do none")
   
   
-  @commands.command(help = 'times a user out')
+  @bridge.bridge_command(help = 'times a user out')
   @commands.has_permissions(ban_members=True)
   async def timeout(self, ctx, member: discord.Member):
       role = discord.utils.get(ctx.guild.roles, name='Timeout')
       await member.add_roles(role)
-      await ctx.send("hahahaha loser")
+      await ctx.respons("hahahaha loser")
   
   
-  @commands.command(help = 'probably unmuted a user')
+  @bridge.bridge_command(help = 'probably unmuted a user')
   @commands.has_permissions(ban_members=True)
   async def unmute(self, ctx, member: discord.Member):
       role = discord.utils.get(ctx.guild.roles, name='Muted')
       await member.remove_roles(role)
-      await ctx.send("FREED")
+      await ctx.respond("FREED")
   
   
-  @commands.command(help = 'free a user from timeout')
+  @bridge.bridge_command(help = 'free a user from timeout')
   @commands.has_permissions(ban_members=True)
   async def free(self, ctx, member: discord.Member):
       role = discord.utils.get(ctx.guild.roles, name='Timeout')
       await member.remove_roles(role)
-      await ctx.send("FREED")
+      await ctx.respond("FREED")
 
 
-async def setup(bot):
-    await bot.add_cog(mod(bot))
+def setup(bot):
+    bot.add_cog(mod(bot))

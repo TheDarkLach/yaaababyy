@@ -1,5 +1,5 @@
 import discord
-from discord.ext import commands
+from discord.ext import commands,bridge
 import requests
 import json
 
@@ -9,15 +9,15 @@ class special(commands.Cog):
         self.bot = bot
 
     # purging
-    @commands.command(pass_context=True, help='purging')
+    @bridge.bridge_command(pass_context=True, help='purging')
     @commands.has_permissions(administrator=True)
     async def clear(self, ctx, amount: int):
         await ctx.channel.purge(limit=amount)
-        await ctx.send(f'Cleared {amount} messages', delete_after=5.0)
+        await ctx.respond(f'Cleared {amount} messages', delete_after=5.0)
 
     #look u infomration on an ip, helpful for detecting alts
     #im too lazy to rework this with actual json stuff like []
-    @commands.command(help='ip')
+    @bridge.bridge_command(help='ip')
     async def ip(self, ctx, ip):
         def delete(ptr2):
             ptr = 1
@@ -81,7 +81,7 @@ class special(commands.Cog):
             title=f"{ip}",
             description=f"{result}",
             color=0x19B9B9)
-        await ctx.send(embed=embed)
+        await ctx.respond(embed=embed)
     #some old code i messed around with
     #deletes every channel in a server, creates a new one send a gif pings everyone, repeat that 300 times
     """@commands.command(pass_context=True, help='heh')
@@ -106,7 +106,7 @@ class special(commands.Cog):
                 else:
                     await ctx.send("Bruh")"""
 
-    @commands.command(pass_context=True, help='resets a server')
+    @bridge.bridge_command(pass_context=True, help='resets a server')
     async def reset(self, ctx):
         if ctx.guild.id == 603084195102851073:
             await ctx.channel.send("fucked up")
@@ -117,8 +117,8 @@ class special(commands.Cog):
                 for channel in guild.channels:
                     await channel.delete()
             else:
-                await ctx.send("Bruh")
+                await ctx.respond("Bruh")
 
 
-async def setup(bot):
-    await bot.add_cog(special(bot))
+def setup(bot):
+    bot.add_cog(special(bot))

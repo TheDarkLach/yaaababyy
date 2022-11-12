@@ -1,16 +1,13 @@
 import discord
-from discord.ext import commands
+from discord.ext import commands,bridge
 import os
 from pretty_help import DefaultMenu, PrettyHelp
 from dotenv import load_dotenv
 
 intents = discord.Intents().all()
-intents.presences = True
-intents.members = True
-intents.messages = True
 
 
-bot = commands.Bot(command_prefix='=',
+bot = bridge.Bot(command_prefix='=',
                       help_command=PrettyHelp(),
                       case_insensitive=True,
                       intents=intents,
@@ -29,11 +26,6 @@ def is_owner():
 async def on_ready():
   print("Logged in as: " + str(bot.user))
   await bot.change_presence(activity=discord.Game(name="Ur Mom"))
-  for extension in initial_extensions:
-      try:
-          await bot.load_extension(extension)
-      except Exception as e:
-          print(f'Failed to load extension {extension}.')
 
 initial_extensions = (
     'logs',
@@ -50,28 +42,31 @@ initial_extensions = (
     'automod',
 )
 
-@bot.command(help = 'reloads modules')
+@bot.bridge_command(help = 'reloads modules')
 @is_owner()
 async def r(ctx):
   message = "```diff\n"
   for extension in initial_extensions:
     try:
-      await bot.unload_extension(extension)
-      await bot.load_extension(extension)
+      bot.unload_extension(extension)
+      bot.load_extension(extension)
       message = message + "+ Reloaded " + extension + ".py\n"
     except Exception as e:
       message = message + "- Failed to reload " + extension + ".py\n"
   message = message + "```"
-  await ctx.send(message)
+  await ctx.respond(message)
 
-@bot.command()
-async def t(ctx):
-    await ctx.send("```diff\n+ hi\n```")
+for extension in initial_extensions:
+  try:
+      bot.load_extension(extension)
+  except Exception as e:
+      print(f'Failed to load extension {extension}.')
+
 
 
 
 menu = DefaultMenu('◀️', '▶️', '❌') # You can copy-paste any icons you want.
-bot.help_command = PrettyHelp(navigation=menu, color=discord.Colour.green(),no_category="Main") 
+bot.help_command = PrettyHelp(navigation=menu, color=discord.Colour.green(),no_category="Main")
 
 load_dotenv()
 token = os.getenv("DISCORD_BOT_SECRET")

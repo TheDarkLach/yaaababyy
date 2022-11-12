@@ -1,13 +1,13 @@
 import json
 import discord
 import requests
-from discord.ext import commands
+from discord.ext import commands,bridge
 
 class pokemon(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(help="pokemon info")
+    @bridge.bridge_command(help="pokemon info")
     async def pokemon(self,ctx,pk):
         url = "https://pokeapi.co/api/v2/pokemon/" + pk
         response = requests.get(url)
@@ -35,8 +35,8 @@ class pokemon(commands.Cog):
         embed.set_thumbnail(url=icon)
         embed.set_footer(text=':)')
 
-        await ctx.send(embed=embed)
+        await ctx.respond(embed=embed)
 
 
-async def setup(bot):
-    await bot.add_cog(pokemon(bot))
+def setup(bot):
+    bot.add_cog(pokemon(bot))

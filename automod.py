@@ -31,12 +31,12 @@ class automod(commands.Cog):
             response = client.comments().analyze(body=analyze_request).execute()
             result = response['attributeScores']['TOXICITY']['summaryScore']['value']
 
-            if result >= 0.85:
+            if result >= 0.95:
                 embed = discord.Embed(title=f"{message.author}, please tone it down", description=f"your toxicity score was {result}", color=0x19B9B9)
                 await message.reply(embed=embed)
         except:
             print("something went wrong")
 
 
-async def setup(bot):
-    await bot.add_cog(automod(bot))
+def setup(bot):
+    bot.add_cog(automod(bot))
