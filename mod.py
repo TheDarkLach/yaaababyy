@@ -13,7 +13,7 @@ class mod(commands.Cog):
           title="Kicked!",
           description="**{0}** was kicked for **'{1}'**".format(user, reason),
           color=0x19B9B9)
-      await ctx.channel.respond(embed=embed)
+      await ctx.respond(embed=embed)
   
   
   @bridge.bridge_command(help = 'ban')
@@ -28,7 +28,7 @@ class mod(commands.Cog):
           description="**{0}** was banned for **'{1}'** ".format(
               user, reason),
           color=0x19B9B9)
-      await ctx.channel.respond(embed=embed)
+      await ctx.respond(embed=embed)
 
   @bridge.bridge_command(help = 'ban through id (idt this works)')
   @commands.has_permissions(ban_members=True)
@@ -43,7 +43,7 @@ class mod(commands.Cog):
           description="**{0}** was banned for **'{1}'**".format(
               user, reason),
           color=0x19B9B9)
-      await ctx.channel.respons(embed=embed)
+      await ctx.respond(embed=embed)
   
   
   @bridge.bridge_command(help = 'unban')
@@ -51,7 +51,7 @@ class mod(commands.Cog):
   async def unban(self, ctx, id: int):
       user = await commands.fetch_user(id)
       await ctx.guild.unban(user)
-      await ctx.channel.respond("{0} has been unbanned".format(user.mention))
+      await ctx.respond("{0} has been unbanned".format(user.mention))
   
   
   @bridge.bridge_command(help = 'probably mutes a user')
@@ -67,7 +67,7 @@ class mod(commands.Cog):
   async def timeout(self, ctx, member: discord.Member):
       role = discord.utils.get(ctx.guild.roles, name='Timeout')
       await member.add_roles(role)
-      await ctx.respons("hahahaha loser")
+      await ctx.respond("hahahaha loser")
   
   
   @bridge.bridge_command(help = 'probably unmuted a user')
