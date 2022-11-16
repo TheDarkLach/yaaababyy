@@ -41,6 +41,7 @@ initial_extensions = (
     'pokemon',
     'automod',
     'paladins',
+    'page',
 )
 
 @bot.bridge_command(help = 'reloads modules')

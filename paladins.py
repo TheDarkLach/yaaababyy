@@ -159,6 +159,24 @@ class paladins(commands.Cog):
         player = (player1[0]["player_id"])
         await ctx.send(paladins1.getFriends(player))
 
+    @bridge.bridge_command(help="friends")
+    async def champs(self, ctx, player):
+        ogplayer = player
+        x = 0
+        player1 = getplayerID(player)
+        player = (player1[0]["player_id"])
+        test =""
+        await ctx.channel.send("Gathering data please wait !")
+        for i in paladins1.getChampionRanks(player):
+            test = test + (str(paladins1.getChampionRanks(player)[x]["champion"]) + ", lvl " + str(paladins1.getChampionRanks(player)[x]["Rank"]) + "\n")
+            x+=1
+
+        embed = discord.Embed(title=f"{ogplayer}'s champions",description=test, color=0x19B9B9)
+
+        await ctx.respond(embed=embed)
+
+
+
 
 def setup(bot):
     bot.add_cog(paladins(bot))
