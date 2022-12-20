@@ -9,6 +9,7 @@ import discord
 from discord.ext import bridge,commands
 import os
 from dotenv import load_dotenv
+import re
 
 load_dotenv()
 id = os.getenv("pal_id")
@@ -68,6 +69,10 @@ class smite(commands.Cog):
         f = open('smite2.json',)
         input = json.load(f)
         f.close()
+        god = god.lower()
+        regex = re.compile('[^a-zA-Z]')
+        # First parameter is the replacement, second parameter is your input string
+        god = regex.sub('', god)
 
         num = input[god]
         #print(num)
