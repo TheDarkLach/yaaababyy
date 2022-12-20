@@ -29,7 +29,8 @@ class paladins(commands.Cog):
     @bridge.bridge_command(help="player")
     async def player(self, ctx,player):
         player1 = paladins1.getPlayer(player)
-        print(player1)
+        #print(type(player1))
+        #print(player1)
         playerid = player1["ActivePlayerId"]
         icon = player1["AvatarURL"]
         hours = player1["HoursPlayed"]
@@ -151,13 +152,13 @@ class paladins(commands.Cog):
         embed.add_field(name="PC Rank: ", value=f"{tier}", inline=False)
         embed.add_field(name="Console Rank: ", value=f"{tierc}", inline=True)
         embed.set_thumbnail(url=icon)
-        await ctx.send(embed=embed)
+        await ctx.respond(embed=embed)
 
     @bridge.bridge_command(help="friends")
     async def friends(self, ctx, player):
         player1 = getplayerID(player)
         player = (player1[0]["player_id"])
-        await ctx.send(paladins1.getFriends(player))
+        await ctx.respond(paladins1.getFriends(player))
 
     @bridge.bridge_command(help="friends")
     async def champs(self, ctx, player):

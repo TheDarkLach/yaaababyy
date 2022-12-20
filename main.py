@@ -42,6 +42,7 @@ initial_extensions = (
     'automod',
     'paladins',
     'page',
+    'smite',
 )
 
 @bot.bridge_command(help = 'reloads modules')

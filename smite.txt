@@ -1,0 +1,32 @@
+{
+    "achilles":{
+        "id":"0"
+    },
+    "agni":{
+        "id":"1"
+    },
+    "ahmuzencab":{
+        "id":"2"
+    },
+    "ahpuch":{
+        "id":"3"
+    },
+    "amaterasu":{
+        "id":"4"
+    },
+    "anhur":{
+        "id":"5"
+    },
+    "anubis":{
+        "id":"6"
+    },
+    "aokuang":{
+        "id":"7"
+    },
+    "aphrodite":{
+        "id":"8"
+    },
+    "apollo":{
+        "id":"9"
+    },
+}
