@@ -26,8 +26,10 @@ class smite(commands.Cog):
     @bridge.bridge_command(help="smite")
     async def smite(self, ctx, player):
         username = player
+        id = getplayerID(username)
         player = smite1.getPlayer(player)
         #print(player)
+
         playerid = player["ActivePlayerId"]
         icon = player["Avatar_URL"]
         hours = player["HoursPlayed"]
@@ -38,9 +40,13 @@ class smite(commands.Cog):
         embed.add_field(name="Hours Played: ", value=f"{hours}", inline=True)
         embed.add_field(name="ID: ", value=f"{playerid}", inline=True)
         embed.set_thumbnail(url=icon)
+
+        #gods = smite1.getGodRanks(playerid)
+
+
         await ctx.respond(embed=embed)
 
-    @bridge.bridge_command(help="smite")
+    """@bridge.bridge_command(help="smite")
     async def godp(self,ctx,god):
         gods = smite1.getGods()
 
@@ -79,7 +85,7 @@ class smite(commands.Cog):
         embed.set_thumbnail(url=icon)
         await ctx.respond(embed=embed)
 
-    """@bridge.bridge_command(help="friends")
+    @bridge.bridge_command(help="friends")
     async def Smitefriends(self, ctx, player):
         player1 = getplayerID(player)
         player = (player1[0]["player_id"])
@@ -126,16 +132,7 @@ class smite(commands.Cog):
         a4u = gods[int(num)]["godAbility4_URL"]
         a5u = gods[int(num)]["godAbility5_URL"]
 
-        abilities = gods[int(num)]["Ability1"] + ", " + gods[int(num)]["Ability2"] + ", " + gods[int(num)][
-            "Ability3"] + ", " + gods[int(num)]["Ability4"] + ", " + gods[int(num)]["Ability5"]
         icon = gods[int(num)]["godCard_URL"]
-
-        embed = discord.Embed(title=title, color=0x19B9B9)
-        embed.set_author(name=name, icon_url=auth)
-        embed.add_field(name="Role: ", value=Role, inline=True)
-        embed.add_field(name="Type: ", value=type, inline=True)
-        # embed.add_field(name="Abilities: ", value=f"{abilities}", inline=False)
-        embed.set_thumbnail(url=icon)
 
         realpages = [
             pages.Page(
@@ -177,7 +174,29 @@ class smite(commands.Cog):
         paginator = pages.Paginator(pages=realpages)
         await paginator.respond(ctx.interaction, ephemeral=False)
 
-        #await ctx.respond(embed=embed)
+
+    @bridge.bridge_command(help="smite")
+    async def rec(self, ctx, god):
+        send = ""
+        f = open('smite3.json', )
+        input = json.load(f)
+        f.close()
+
+        # formatting
+        god = god.lower()
+        regex = re.compile('[^a-zA-Z]')
+        # First parameter is the replacement, second parameter is your input string
+        god = regex.sub('', god)
+
+        id = input[god]
+        items = smite1.getGodRecommendedItems(id)
+        print(items)
+        for i in range(0, len(items)):
+            send = send + items[i]["Item"] + "\n"
+            #print(items[i]["Item"])
+        #await ctx.respond(send)
+
+
 
 
 

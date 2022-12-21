@@ -35,7 +35,8 @@ class automod(commands.Cog):
                 embed = discord.Embed(title=f"{message.author}, please tone it down", description=f"your toxicity score was {result}", color=0x19B9B9)
                 await message.reply(embed=embed)
         except:
-            print("something went wrong")
+            #print("something went wrong")
+            pass
 
 
 def setup(bot):
