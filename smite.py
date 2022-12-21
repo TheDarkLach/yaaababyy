@@ -1,9 +1,5 @@
 import json
 
-import pyrez
-import pyrez.api
-from pyrez.api import SmiteAPI
-import pyrez.enumerations
 import pyrez.models
 import discord
 from discord.ext import bridge,commands,pages
@@ -35,16 +31,48 @@ class smite(commands.Cog):
         hours = player["HoursPlayed"]
         level = player["Level"]
         clan = player["Team_Name"]
-        embed = discord.Embed(title=username, description=clan, color=0x19B9B9)
+        """embed = discord.Embed(title=username, description=clan, color=0x19B9B9)
         embed.add_field(name="Level: ", value=f"{level}", inline=True)
         embed.add_field(name="Hours Played: ", value=f"{hours}", inline=True)
         embed.add_field(name="ID: ", value=f"{playerid}", inline=True)
-        embed.set_thumbnail(url=icon)
+        embed.set_thumbnail(url=icon)"""
 
-        #gods = smite1.getGodRanks(playerid)
+        gods = smite1.getGodRanks(playerid)
+
+        one = gods[0]["god"]
+        two = gods[1]["god"]
+        three = gods[2]["god"]
+        four = gods[3]["god"]
+        five = gods[4]["god"]
+        kda1 = round((int(gods[0]["Kills"]) + int(gods[0]["Assists"])) / int(gods[0]["Deaths"]),2)
+        kda2 = round((int(gods[1]["Kills"]) + int(gods[1]["Assists"])) / int(gods[1]["Deaths"]),2)
+        kda3 = round((int(gods[2]["Kills"]) + int(gods[2]["Assists"])) / int(gods[2]["Deaths"]),2)
+        kda4 = round((int(gods[3]["Kills"]) + int(gods[3]["Assists"])) / int(gods[3]["Deaths"]),2)
+        kda5 = round((int(gods[4]["Kills"]) + int(gods[4]["Assists"])) / int(gods[4]["Deaths"]),2)
+
+        realpages = [
+            pages.Page(
+                embeds=[
+                    discord.Embed(title=username,description=clan, color=0x19B9B9)
+                        .add_field(name="Level: ", value=level, inline=True)
+                        .add_field(name="Hours Played: ", value=hours, inline=True)
+                        .add_field(name="ID: ", value=f"{playerid}", inline=True)
+                        .set_thumbnail(url=icon)
+                ]
+            ),
+            pages.Page(
+                embeds=[
+                    discord.Embed(title="Top 5 gods + KDA", color=0x19B9B9).add_field(name=one,value=kda1,inline=True).add_field(name=two,value=kda2,inline=True).add_field(name=three,value=kda3,inline=True).add_field(name=four,value=kda4,inline=True).add_field(name=five,value=kda5,inline=True)
+                ]
+            )
+        ]
+
+        paginator = pages.Paginator(pages=realpages)
+        await paginator.respond(ctx.interaction, ephemeral=False)
 
 
-        await ctx.respond(embed=embed)
+
+        #await ctx.respond(embed=embed)
 
     """@bridge.bridge_command(help="smite")
     async def godp(self,ctx,god):
