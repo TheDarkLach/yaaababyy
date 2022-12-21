@@ -6,7 +6,7 @@ from pyrez.api import SmiteAPI
 import pyrez.enumerations
 import pyrez.models
 import discord
-from discord.ext import bridge,commands
+from discord.ext import bridge,commands,pages
 import os
 from dotenv import load_dotenv
 import re
@@ -41,51 +41,41 @@ class smite(commands.Cog):
         await ctx.respond(embed=embed)
 
     @bridge.bridge_command(help="smite")
-    async def god(self,ctx,god):
+    async def godp(self,ctx,god):
         gods = smite1.getGods()
-        """dict = {
-                "achilles":"0",
-                "agni":"1",
-                "ahmuzencab":"2",
-                "ahpuch":"3",
-                "amaterasu":"4",
-                "anhur":"5",
-                "anubis":"6",
-                "aokuang":"7",
-                "aphrodite":"8",
-                "apollo":"9"
-            }
-
-        f1 = open('smite.txt', 'r+')
-        input = f1.read()
-        #result = json.loads(input)
-        f1.close()
-        out = open('smite2.json', 'w')
-        json.dump(input,out,indent=6)
-        out.close()
-        with open("smite2.json", "w") as outfile:
-            json.dump(dict, outfile,indent=6)"""
 
         f = open('smite2.json',)
         input = json.load(f)
         f.close()
+
+        #formatting
         god = god.lower()
         regex = re.compile('[^a-zA-Z]')
         # First parameter is the replacement, second parameter is your input string
         god = regex.sub('', god)
 
         num = input[god]
-        #print(num)
-        print(gods[int(num)])
+
+        #print(gods[int(num)])
         name = gods[int(num)]["Name"]
         Role = gods[int(num)]["Roles"]
         type = gods[int(num)]["Type"]
-        #lore = gods[int(num)]["Lore"]
+        auth = gods[int(num)]["godIcon_URL"]
+        title = gods[int(num)]["Title"]
+        a1 = gods[int(num)]["godAbility1_URL"]
+        a2 = gods[int(num)]["godAbility2_URL"]
+        a3 = gods[int(num)]["godAbility3_URL"]
+        a4 = gods[int(num)]["godAbility4_URL"]
+        a5 = gods[int(num)]["godAbility5_URL"]
+
         abilities = gods[int(num)]["Ability1"] + ", " + gods[int(num)]["Ability2"] + ", " + gods[int(num)]["Ability3"] + ", " + gods[int(num)]["Ability4"] + ", " + gods[int(num)]["Ability5"]
         icon = gods[int(num)]["godCard_URL"]
 
-        embed = discord.Embed(title=name, description=Role + "\n" + type, color=0x19B9B9)
-        embed.add_field(name="Abilities: ", value=f"{abilities}", inline=True)
+        embed = discord.Embed(title=title, color=0x19B9B9)
+        embed.set_author(name=name, icon_url=auth)
+        embed.add_field(name="Role: ", value=Role, inline=True)
+        embed.add_field(name="Type: ", value=type, inline=True)
+        #embed.add_field(name="Abilities: ", value=f"{abilities}", inline=False)
         embed.set_thumbnail(url=icon)
         await ctx.respond(embed=embed)
 
@@ -94,6 +84,102 @@ class smite(commands.Cog):
         player1 = getplayerID(player)
         player = (player1[0]["player_id"])
         await ctx.respond(smite1.getFriends(player))"""
+
+    @bridge.bridge_command(help="smite")
+    async def god(self, ctx, god):
+        gods = smite1.getGods()
+
+        f = open('smite2.json', )
+        input = json.load(f)
+        f.close()
+
+        # formatting
+        god = god.lower()
+        regex = re.compile('[^a-zA-Z]')
+        # First parameter is the replacement, second parameter is your input string
+        god = regex.sub('', god)
+
+        num = input[god]
+
+        #print(gods[int(num)])
+        name = gods[int(num)]["Name"]
+        Role = gods[int(num)]["Roles"]
+        type = gods[int(num)]["Type"]
+        auth = gods[int(num)]["godIcon_URL"]
+        title = gods[int(num)]["Title"]
+
+        a1 = gods[int(num)]["Ability1"]
+        a2 = gods[int(num)]["Ability2"]
+        a3 = gods[int(num)]["Ability3"]
+        a4 = gods[int(num)]["Ability4"]
+        a5 = gods[int(num)]["Ability5"]
+
+        a1d = gods[int(num)]["Ability_1"]["Description"]["itemDescription"]["description"]
+        a2d = gods[int(num)]["Ability_2"]["Description"]["itemDescription"]["description"]
+        a3d = gods[int(num)]["Ability_3"]["Description"]["itemDescription"]["description"]
+        a4d = gods[int(num)]["Ability_4"]["Description"]["itemDescription"]["description"]
+        a5d = gods[int(num)]["Ability_5"]["Description"]["itemDescription"]["description"]
+
+        a1u = gods[int(num)]["godAbility1_URL"]
+        a2u = gods[int(num)]["godAbility2_URL"]
+        a3u = gods[int(num)]["godAbility3_URL"]
+        a4u = gods[int(num)]["godAbility4_URL"]
+        a5u = gods[int(num)]["godAbility5_URL"]
+
+        abilities = gods[int(num)]["Ability1"] + ", " + gods[int(num)]["Ability2"] + ", " + gods[int(num)][
+            "Ability3"] + ", " + gods[int(num)]["Ability4"] + ", " + gods[int(num)]["Ability5"]
+        icon = gods[int(num)]["godCard_URL"]
+
+        embed = discord.Embed(title=title, color=0x19B9B9)
+        embed.set_author(name=name, icon_url=auth)
+        embed.add_field(name="Role: ", value=Role, inline=True)
+        embed.add_field(name="Type: ", value=type, inline=True)
+        # embed.add_field(name="Abilities: ", value=f"{abilities}", inline=False)
+        embed.set_thumbnail(url=icon)
+
+        realpages = [
+            pages.Page(
+                embeds=[
+                    discord.Embed(title = title,color=0x19B9B9).set_author(name=name,icon_url=auth).add_field(name="Role: ", value=Role, inline=True).add_field(name="Type: ", value=type, inline=True).set_thumbnail(url=icon)
+                ]
+            ),
+            pages.Page(
+                embeds=[
+                    discord.Embed(title=a1,color=0x19B9B9).set_thumbnail(url=a1u).add_field(name="Description: ", value=a1d, inline=False)
+                ]
+            ),
+            pages.Page(
+                embeds=[
+                    discord.Embed(title=a2, color=0x19B9B9).set_thumbnail(url=a2u).add_field(name="Description: ",
+                                                                                             value=a2d, inline=False)
+                ]
+            ),
+            pages.Page(
+                embeds=[
+                    discord.Embed(title=a3, color=0x19B9B9).set_thumbnail(url=a3u).add_field(name="Description: ",
+                                                                                             value=a3d, inline=False)
+                ]
+            ),
+            pages.Page(
+                embeds=[
+                    discord.Embed(title=a4, color=0x19B9B9).set_thumbnail(url=a4u).add_field(name="Description: ",
+                                                                                             value=a4d, inline=False)
+                ]
+            ),
+            pages.Page(
+                embeds=[
+                    discord.Embed(title=a5 + " (Passive)", color=0x19B9B9).set_thumbnail(url=a5u).add_field(name="Description: ",
+                                                                                             value=a5d, inline=False)
+                ]
+            )
+        ]
+
+        paginator = pages.Paginator(pages=realpages)
+        await paginator.respond(ctx.interaction, ephemeral=False)
+
+        #await ctx.respond(embed=embed)
+
+
 
 def setup(bot):
     bot.add_cog(smite(bot))
