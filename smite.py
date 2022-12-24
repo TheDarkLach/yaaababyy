@@ -6,6 +6,7 @@ from discord.ext import bridge,commands,pages
 import os
 from dotenv import load_dotenv
 import re
+import datetime
 
 load_dotenv()
 id = os.getenv("pal_id")
@@ -24,18 +25,13 @@ class smite(commands.Cog):
         username = player
         id = getplayerID(username)
         player = smite1.getPlayer(player)
-        #print(player)
+        # print(player)
 
         playerid = player["ActivePlayerId"]
         icon = player["Avatar_URL"]
         hours = player["HoursPlayed"]
         level = player["Level"]
         clan = player["Team_Name"]
-        """embed = discord.Embed(title=username, description=clan, color=0x19B9B9)
-        embed.add_field(name="Level: ", value=f"{level}", inline=True)
-        embed.add_field(name="Hours Played: ", value=f"{hours}", inline=True)
-        embed.add_field(name="ID: ", value=f"{playerid}", inline=True)
-        embed.set_thumbnail(url=icon)"""
 
         gods = smite1.getGodRanks(playerid)
 
@@ -44,25 +40,76 @@ class smite(commands.Cog):
         three = gods[2]["god"]
         four = gods[3]["god"]
         five = gods[4]["god"]
+
         kda1 = round((int(gods[0]["Kills"]) + int(0.5 * gods[0]["Assists"])) / int(gods[0]["Deaths"]), 2)
         kda2 = round((int(gods[1]["Kills"]) + int(0.5 * gods[1]["Assists"])) / int(gods[1]["Deaths"]), 2)
         kda3 = round((int(gods[2]["Kills"]) + int(0.5 * gods[2]["Assists"])) / int(gods[2]["Deaths"]), 2)
         kda4 = round((int(gods[3]["Kills"]) + int(0.5 * gods[3]["Assists"])) / int(gods[3]["Deaths"]), 2)
         kda5 = round((int(gods[4]["Kills"]) + int(0.5 * gods[4]["Assists"])) / int(gods[4]["Deaths"]), 2)
 
+        conquestrank = player["RankedConquest"]["Tier"]
+        print(conquestrank)
+
+        f = open('tiers.json', )
+        input = json.load(f)
+        f.close()
+
+        conquestrank = input[str(conquestrank)]
+        conquestwl = f'{player["RankedConquest"]["Wins"]} / {player["RankedConquest"]["Losses"]}'
+        conquestmmr = round(player["RankedConquest"]["Rank_Stat"])
+        conquesttp = player["RankedConquest"]["Points"]
+
+        joustrank = player["RankedJoust"]["Tier"]
+
+        joustrank = input[str(joustrank)]
+        joustwl = f'{player["RankedJoust"]["Wins"]} / {player["RankedJoust"]["Losses"]}'
+        joustmmr = round(player["RankedJoust"]["Rank_Stat"])
+        jousttp = player["RankedJoust"]["Points"]
+
+        duelrank = player["RankedDuel"]["Tier"]
+
+        duelrank = input[str(duelrank)]
+        duelwl = f'{player["RankedDuel"]["Wins"]} / {player["RankedDuel"]["Losses"]}'
+        duelmmr = round(player["RankedDuel"]["Rank_Stat"])
+        dueltp = player["RankedDuel"]["Points"]
+
+        wins = player["Wins"]
+        losses = player["Losses"]
+        mastery = player["MasteryLevel"]
+        worshipers = player["Total_Worshipers"]
+
         realpages = [
             pages.Page(
                 embeds=[
-                    discord.Embed(title=username,description=clan, color=0x19B9B9)
-                        .add_field(name="Level: ", value=level, inline=True)
-                        .add_field(name="Hours Played: ", value=hours, inline=True)
-                        .add_field(name="ID: ", value=f"{playerid}", inline=True)
-                        .set_thumbnail(url=icon)
+                    discord.Embed(timestamp=datetime.datetime.now(), color=0x19B9B9).add_field(name="Level: ",
+                                                                                               value=level,
+                                                                                               inline=True).add_field(
+                        name="Mastery", value=mastery, inline=True).add_field(name="Worshippers", value=worshipers,
+                                                                              inline=True) \
+                        .add_field(name="Hours Played", value=hours, inline=True).add_field(name="Wins", value=wins,
+                                                                                            inline=True).add_field(
+                        name="Losses", value=losses, inline=True) \
+                        .add_field(name="Ranked Conquest",
+                                   value=f'{conquestrank}\nW/L: {conquestwl}\nMMR: {conquestmmr}\nTP: {conquesttp}',
+                                   inline=True).add_field(name="Ranked Joust",
+                                                          value=f'{joustrank}\nW/L: {joustwl}\nMMR: {joustmmr}\nTP: {jousttp}',
+                                                          inline=True).add_field(name="Ranked Duel",
+                                                                                 value=f'{duelrank}\nW/L: {duelwl}\nMMR: {duelmmr}\nTP: {dueltp}',
+                                                                                 inline=True) \
+                        .set_footer(text="\u200b").set_author(name=f'{username} [{clan}]', icon_url=icon)
                 ]
             ),
             pages.Page(
+                # REDO THIS FOR ONE EMBED OR SOMETHIGN SO ITS DOESNT LOOK SO CLUTTERED
                 embeds=[
-                    discord.Embed(title="Top 5 gods + KDA", color=0x19B9B9).add_field(name=one,value=kda1,inline=True).add_field(name=two,value=kda2,inline=True).add_field(name=three,value=kda3,inline=True).add_field(name=four,value=kda4,inline=True).add_field(name=five,value=kda5,inline=True)
+                    discord.Embed(timestamp=datetime.datetime.now(), color=0x19B9B9).add_field(name=one, value=kda1,
+                                                                                               inline=True).add_field(
+                        name=two, value=kda2, inline=True) \
+                        .add_field(name=three, value=kda3, inline=True).add_field(name=four, value=kda4,
+                                                                                  inline=True).add_field(name=five,
+                                                                                                         value=kda5,
+                                                                                                         inline=True) \
+                        .set_footer(text="\u200b").set_author(name=f'{username} [{clan}]', icon_url=icon)
                 ]
             )
         ]
