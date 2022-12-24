@@ -44,11 +44,11 @@ class smite(commands.Cog):
         three = gods[2]["god"]
         four = gods[3]["god"]
         five = gods[4]["god"]
-        kda1 = round((int(gods[0]["Kills"]) + int(gods[0]["Assists"])) / int(gods[0]["Deaths"]),2)
-        kda2 = round((int(gods[1]["Kills"]) + int(gods[1]["Assists"])) / int(gods[1]["Deaths"]),2)
-        kda3 = round((int(gods[2]["Kills"]) + int(gods[2]["Assists"])) / int(gods[2]["Deaths"]),2)
-        kda4 = round((int(gods[3]["Kills"]) + int(gods[3]["Assists"])) / int(gods[3]["Deaths"]),2)
-        kda5 = round((int(gods[4]["Kills"]) + int(gods[4]["Assists"])) / int(gods[4]["Deaths"]),2)
+        kda1 = round((int(gods[0]["Kills"]) + int(0.5 * gods[0]["Assists"])) / int(gods[0]["Deaths"]), 2)
+        kda2 = round((int(gods[1]["Kills"]) + int(0.5 * gods[1]["Assists"])) / int(gods[1]["Deaths"]), 2)
+        kda3 = round((int(gods[2]["Kills"]) + int(0.5 * gods[2]["Assists"])) / int(gods[2]["Deaths"]), 2)
+        kda4 = round((int(gods[3]["Kills"]) + int(0.5 * gods[3]["Assists"])) / int(gods[3]["Deaths"]), 2)
+        kda5 = round((int(gods[4]["Kills"]) + int(0.5 * gods[4]["Assists"])) / int(gods[4]["Deaths"]), 2)
 
         realpages = [
             pages.Page(
