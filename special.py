@@ -2,6 +2,8 @@ import discord
 from discord.ext import commands,bridge
 import requests
 import json
+from dotenv import load_dotenv
+import os
 
 
 class special(commands.Cog):
@@ -42,7 +44,8 @@ class special(commands.Cog):
 
         # 73.240.38.112
         fields = "country,city,security,region,postal_code,continent,longitude,latitude,security > is_vpn,timezone,currency ,connection"
-        key = '981a6c79887c405f8f1509da9a080a5e'
+        load_dotenv()
+        key = os.getenv("ipkey")
         response = requests.get(
             'https://ipgeolocation.abstractapi.com/v1/?api_key=' + key + '&ip_address=' + ip)  # + "&fields=" + fields)
         result = json.loads(response.content)

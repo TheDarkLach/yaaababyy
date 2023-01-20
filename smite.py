@@ -22,9 +22,13 @@ class smite(commands.Cog):
 
     @bridge.bridge_command(help="smite")
     async def smite(self, ctx, player):
-        username = player
-        id = getplayerID(username)
-        player = smite1.getPlayer(player)
+        try:
+            username = player
+            id = getplayerID(username)
+            player = smite1.getPlayer(player)
+        except Exception as e:
+            await ctx.respond("Player not found or private")
+            return
         # print(player)
 
         playerid = player["ActivePlayerId"]
