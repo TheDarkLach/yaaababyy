@@ -26,6 +26,12 @@ class owner(commands.Cog):
       embed = discord.Embed(title="Kicked!",description="**{0}** was kicked for **'{1}'**".format(user, reason),color=0x19B9B9)
       await ctx.channel.respond(embed=embed)
 
+  @bridge.bridge_command(help='leave server')
+  @is_owner()
+  async def leaveserver(self, ctx, id):
+      await self.bot.get_guild(int(id)).leave()
+      await ctx.respond(f"I left: {id}")
+
   @bridge.bridge_command()
   @is_owner()
   async def oban(self, ctx, user: discord.Member = None, *, reason="No reason"):
