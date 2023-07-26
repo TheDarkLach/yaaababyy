@@ -1,7 +1,6 @@
 import discord
 from discord.ext import commands, bridge
 import datetime
-from instaloader import Instaloader, Profile
 import random
 import requests
 

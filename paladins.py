@@ -28,6 +28,7 @@ class paladins(commands.Cog):
 
     @bridge.bridge_command(help="player")
     async def player(self, ctx,player):
+        await ctx.defer()
         player1 = paladins1.getPlayer(player)
         #print(type(player1))
         #print(player1)
@@ -162,6 +163,7 @@ class paladins(commands.Cog):
 
     @bridge.bridge_command(help="friends")
     async def champs(self, ctx, player):
+        await ctx.defer()
         ogplayer = player
         x = 0
         player1 = getplayerID(player)

@@ -20,8 +20,9 @@ class smite(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @bridge.bridge_command(help="smite")
+    @discord.slash_command(help="smite")
     async def smite(self, ctx, player):
+        await ctx.defer()
         try:
             username = player
             id = getplayerID(username)
@@ -119,13 +120,13 @@ class smite(commands.Cog):
         ]
 
         paginator = pages.Paginator(pages=realpages)
-        await paginator.respond(ctx.interaction, ephemeral=False)
+        await paginator.respond(ctx.interaction)
 
 
 
         #await ctx.respond(embed=embed)
 
-    """@bridge.bridge_command(help="smite")
+    """@discord.slash_command(help="smite")
     async def godp(self,ctx,god):
         gods = smite1.getGods()
 
@@ -164,14 +165,15 @@ class smite(commands.Cog):
         embed.set_thumbnail(url=icon)
         await ctx.respond(embed=embed)
 
-    @bridge.bridge_command(help="friends")
+    @discord.slash_command(help="friends")
     async def Smitefriends(self, ctx, player):
         player1 = getplayerID(player)
         player = (player1[0]["player_id"])
         await ctx.respond(smite1.getFriends(player))"""
 
-    @bridge.bridge_command(help="smite")
+    @discord.slash_command(help="smite")
     async def god(self, ctx, god):
+        await ctx.defer()
         gods = smite1.getGods()
 
         f = open('smite2.json', )
@@ -254,7 +256,7 @@ class smite(commands.Cog):
         await paginator.respond(ctx.interaction, ephemeral=False)
 
 
-    @bridge.bridge_command(help="smite")
+    @discord.slash_command(help="smite")
     async def rec(self, ctx, god):
         send = ""
         f = open('smite3.json', )
@@ -273,7 +275,7 @@ class smite(commands.Cog):
         for i in range(0, len(items)):
             send = send + items[i]["Item"] + "\n"
             #print(items[i]["Item"])
-        #await ctx.respond(send)
+        await ctx.respond(send)
 
 
 

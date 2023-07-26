@@ -1,14 +1,14 @@
 import discord
 from discord.ext import commands,bridge
 import os
-from pretty_help import DefaultMenu, PrettyHelp
+#from pretty_help import DefaultMenu, PrettyHelp
 from dotenv import load_dotenv
 
 intents = discord.Intents().all()
 
 
 bot = bridge.Bot(command_prefix='=',
-                      help_command=PrettyHelp(),
+                      help_command=None,
                       case_insensitive=True,
                       intents=intents,
                       allowed_mentions=discord.AllowedMentions(everyone=True))
@@ -68,8 +68,8 @@ for extension in initial_extensions:
 
 
 
-menu = DefaultMenu('◀️', '▶️', '❌') # You can copy-paste any icons you want.
-bot.help_command = PrettyHelp(navigation=menu, color=discord.Colour.green(),no_category="Main")
+#menu = DefaultMenu('◀️', '▶️', '❌') # You can copy-paste any icons you want.
+#bot.help_command = PrettyHelp(navigation=menu, color=discord.Colour.green(),no_category="Main")
 
 load_dotenv()
 token = os.getenv("DISCORD_BOT_SECRET")
